@@ -1,0 +1,18 @@
+/* Device-sized layout, safe areas and browser chrome-aware height. */
+:root{--mobile-nav-height:68px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+body[data-mode=mobile] main{width:100%;height:100%;min-width:0;overflow-x:hidden;padding:0 0 calc(var(--mobile-nav-height) + var(--safe-bottom) + 12px);-webkit-overflow-scrolling:touch}
+body[data-mode=mobile] aside{width:100%;height:calc(var(--mobile-nav-height) + var(--safe-bottom));padding:0 env(safe-area-inset-right,0px) var(--safe-bottom) env(safe-area-inset-left,0px);bottom:0;left:0;right:0;transform:none}
+body[data-mode=mobile] header{height:calc(64px + var(--safe-top));padding-top:calc(10px + var(--safe-top));padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));gap:8px}
+body[data-mode=mobile] header #title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body[data-mode=mobile] .content{width:100%;min-width:0;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}
+body[data-mode=mobile] .records,body[data-mode=mobile] .split{min-width:0;grid-template-columns:minmax(0,1fr)}
+body[data-mode=mobile] .record,body[data-mode=mobile] .panel,body[data-mode=mobile] .intro>div{min-width:0;overflow-wrap:anywhere}
+body[data-mode=mobile] .scrolltable{max-width:100%;overflow-x:auto}
+body[data-mode=mobile] dialog{width:calc(100% - 24px);max-width:560px;max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 24px);overflow-y:auto}
+body[data-mode=mobile] .toast{position:fixed;top:auto;bottom:calc(var(--mobile-nav-height) + var(--safe-bottom) + 14px);width:max-content;max-width:calc(100vw - 28px);left:50%;transform:translateX(-50%)}
+body[data-mode=mobile] #loginRoot{padding:calc(20px + var(--safe-top)) max(16px,env(safe-area-inset-right,0px)) calc(20px + var(--safe-bottom)) max(16px,env(safe-area-inset-left,0px));height:100%;min-height:0;overflow:auto}
+body[data-mode=mobile] #loginRoot .loginpanel{max-width:420px}
+body[data-mode=mobile] #guidanceTour{padding-bottom:calc(var(--mobile-nav-height) + var(--safe-bottom) + 10px);padding-top:calc(var(--safe-top) + 10px)}
+body[data-mode=mobile] .tourcard{max-height:100%;overflow-y:auto}
+body[data-mode=mobile] input,body[data-mode=mobile] select,body[data-mode=mobile] textarea{font-size:16px}
+@media(min-width:600px){body[data-mode=mobile] .homemenus{grid-template-columns:repeat(3,minmax(0,1fr))}body[data-mode=mobile] .content{padding-top:24px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}}
