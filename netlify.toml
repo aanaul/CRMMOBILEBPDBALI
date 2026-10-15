@@ -1,0 +1,33 @@
+# Static frontend only. The existing Cloudflare backend remains in use.
+[build]
+  command = "node scripts/build-netlify.mjs"
+  publish = "netlify-static"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+# Keep API requests ahead of frontend routes. Bearer authorization is forwarded.
+# Set the upstream Origin to its own allowed origin for the server-to-server proxy.
+[[redirects]]
+  from = "/api/*"
+  to = "https://jarivis-crm-focus-cms.aaul72.chatgpt.site/api/:splat"
+  status = 200
+  force = true
+  [redirects.headers]
+    Origin = "https://jarivis-crm-focus-cms.aaul72.chatgpt.site"
+
+[[redirects]]
+  from = "/cms"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "private, no-store"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache"
