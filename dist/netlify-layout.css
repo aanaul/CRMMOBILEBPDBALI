@@ -1,0 +1,13 @@
+/* Phone-width presentation on every device; reserve space for Netlify badge. */
+:root{--phone-width:430px;--phone-top:8px;--phone-bottom:80px;--phone-height:min(844px,calc(100dvh - var(--phone-top) - var(--phone-bottom)))}
+html{min-height:100%;background:#e8eeee}
+body[data-mode=mobile]{position:relative;width:min(var(--phone-width),100%);max-width:var(--phone-width);height:calc(100vh - 88px);height:var(--phone-height);min-height:0;margin:var(--phone-top) auto var(--phone-bottom);overflow:hidden;border:1px solid #dbe5e5;border-radius:16px;box-shadow:0 12px 40px #17343c12}
+body[data-mode=mobile] main{height:100%;margin:0;overflow-y:auto;padding-bottom:calc(var(--mobile-nav-height) + var(--safe-bottom) + 12px)}
+body[data-mode=mobile] aside{position:absolute;left:0;right:0;bottom:0;width:100%;transform:none}
+body[data-mode=mobile] .content{padding:18px 14px;width:100%}
+body[data-mode=mobile] .homemenus{grid-template-columns:repeat(2,minmax(0,1fr))}
+body[data-mode=mobile] #loginRoot{position:absolute;inset:0;width:100%;height:100%;padding:20px 16px;overflow:auto}
+body[data-mode=mobile] .toast{top:auto;bottom:calc(var(--phone-bottom) + var(--mobile-nav-height) + var(--safe-bottom) + 14px);left:50%;right:auto;transform:translateX(-50%);max-width:min(402px,calc(100vw - 28px));z-index:150}
+body[data-mode=mobile] #guidanceTour{left:50%;right:auto;top:var(--phone-top);bottom:auto;transform:translateX(-50%);width:min(var(--phone-width),100%);height:var(--phone-height);padding:12px 12px calc(var(--mobile-nav-height) + var(--safe-bottom) + 12px)}
+body[data-mode=mobile] dialog{width:min(402px,calc(100vw - 28px));max-width:402px;max-height:calc(100dvh - 112px)}
+@media(max-width:430px){body[data-mode=mobile]{border-left:0;border-right:0;border-radius:0}}
