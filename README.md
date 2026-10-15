@@ -8,7 +8,7 @@
 - Framework preset: **Other / tidak ada**. Lepaskan plugin Next.js yang dipasang lewat UI jika masih aktif. `NETLIFY_NEXT_PLUGIN_SKIP=true` juga disediakan di `netlify.toml`.
 - Gunakan **Deploy latest commit** setelah perubahan masuk; jangan retry commit lama.
 
-Build menyalin `dist/ beserta asetnya` ke `netlify-static/` dan memakai `/api/` pada domain frontend. Netlify meneruskan API ke backend yang sudah online di https://jarivis-crm-focus-cms.aaul72.chatgpt.site. Backend, database D1, dan penyimpanan R2 tidak dipindah. Login menggunakan bearer token yang diteruskan proxy; Origin upstream disetel melalui aturan proxy. Tidak perlu environment secret frontend.
+Build menyalin dist/ ke netlify-static/. Mobile mengakses API langsung di https://jarivis-crm-focus-cms.aaul72.chatgpt.site. Backend mengizinkan https://mobilebpdbali.netlify.app melalui CORS. D1 dan R2 tetap dipakai; tidak menggunakan proxy Netlify.
 
 Data yang dibaca dan disimpan merupakan data backend yang sama. Session browser lama pada domain lain tidak ikut pindah; login kembali pada domain Netlify.
 
