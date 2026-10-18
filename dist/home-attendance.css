@@ -1,0 +1,11 @@
+/* Attendance is the primary action on mobile Home. */
+.home-attendance{margin:0 0 18px;padding:22px 20px;border-radius:20px;background:linear-gradient(135deg,#123e51,#0d6564);color:#fff;box-shadow:0 10px 26px #123e5120}
+.ha-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.ha-top>span:first-child{font-size:10px;letter-spacing:1.4px;font-weight:700;color:#c7e3e0}
+.ha-status{font-size:10px;padding:5px 8px;border:1px solid #ffffff36;border-radius:20px;color:#e8f4f2}.ha-status.is-working{background:#c5eadb;color:#135442;border-color:transparent}
+.home-attendance h2{font-size:16px;line-height:1.5;font-weight:600;color:#fff;margin:14px 0 20px}
+.ha-times{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ha-times>div{min-width:0;background:#ffffff0d;border:1px solid #ffffff25;border-radius:14px;padding:14px}.ha-times span,.ha-times small{display:block;font-size:11px;color:#c3deda}.ha-times strong{display:block;font-size:32px;line-height:1.25;letter-spacing:1px;font-variant-numeric:tabular-nums;margin:7px 0 3px;color:#fff}
+.ha-duration{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:12px;margin:17px 0;color:#d6e9e5}.ha-duration strong{font-weight:600;color:#fff}
+.home-attendance .ha-clock{display:block;width:100%;border:0;border-radius:12px;background:#edc96b;color:#193f43;font-size:15px;font-weight:700;padding:13px 16px}.home-attendance .ha-clock:disabled{cursor:default;opacity:.65}
+.ha-bottom{display:flex;justify-content:space-between;gap:12px;margin-top:10px}.home-attendance .ha-bottom button{border:0;background:transparent;color:#e4f3ed;padding:5px 0;font-size:11px}
+.home-attendance .ha-note{font-size:10px;color:#bdd8d5;line-height:1.6;margin:9px 0 0}.home-attendance .ha-error{font-size:11px;color:#ffe7bf;margin:10px 0 0}
+@media(max-width:350px){.home-attendance{padding:18px 14px}.ha-times strong{font-size:28px}.ha-status{font-size:9px}}
