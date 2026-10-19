@@ -72,3 +72,5 @@ journeyChoose=function(){crossSellChooserBefore();const form=document.querySelec
 const crossSellLauncherRenderBefore=render;
 render=function(){crossSellLauncherRenderBefore();c360BindSimulationLauncher();};
 c360BindSimulationLauncher();
+const simulationCustomerDetailBefore=c360Detail;
+c360Detail=function(p){if(journey){const s=journey.steps[journey.index];if(s?.route==='Nasabah detail'){c360Focus=p.id;c360Tab=s.c360Tab||({'Identitas':'Profil','Task':'Task & Opportunity','Riwayat Aktivitas':'Interaksi & Keluhan','Opportunity':'Task & Opportunity'})[s.tab]||'Overview'}}return simulationCustomerDetailBefore(p)};
