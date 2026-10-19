@@ -87,7 +87,7 @@ function journeyBar(){
 const journeyRecordBefore=record;
 record=function(action,object,detail=''){if(!journey)return journeyRecordBefore(action,object,detail);db.audit.unshift({id:uid('SIM-H'),action,object,detail,actor:actor(),time:now()});render()};
 const journeyRenderBefore=render;
-render=function(){journeyRenderBefore();if(!journey){let header=document.querySelector('main header');if(!document.querySelector('#journeyLaunch')){let b=document.createElement('button');b.id='journeyLaunch';b.textContent=mobile?'▶ Simulasi':'▶ Putar Simulasi Alur';b.onclick=journeyChoose;header.insertBefore(b,header.querySelector('.user'))}}else document.querySelector('#journeyLaunch')?.remove();journeyBar()};
+render=function(){journeyRenderBefore();if(!journey){let header=document.querySelector('main header');if(!document.querySelector('#journeyLaunch')){let b=document.createElement('button');b.id='journeyLaunch';b.textContent=mobile?'▶ Simulasi':'▶ Putar Simulasi Alur';b.onclick=()=>journeyChoose();header.insertBefore(b,header.querySelector('.user'))}}else document.querySelector('#journeyLaunch')?.remove();journeyBar()};
 const journeyContentBefore=renderContent;
 renderContent=function(){journeyContentBefore();journeyBar()};
 render();

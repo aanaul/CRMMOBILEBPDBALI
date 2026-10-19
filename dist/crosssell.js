@@ -64,3 +64,11 @@ const crossSellJourneyDetailBefore=c360Detail;
 c360Detail=function(p){if(journey?.scenario==='flow-crosssell'){const step=journey.steps[journey.index];if(step?.c360Tab){c360Focus=p.id;c360Tab=step.c360Tab}}return crossSellJourneyDetailBefore(p)};
 const crossSellSimulationIntelligenceBefore=c360Intelligence;
 c360Intelligence=function(p){return '<section class="c360-crosssell-highlight"><div><small>COBA ALUR CROSS-SELL</small><h2>Belajar dari contoh sampai masuk pipeline</h2><p>Putar simulasi customer → produk dimiliki → Cross-sell KUR → Opportunity → Task follow-up. Data latihan terpisah dari data kerja.</p></div>'+btn('▶ Simulasi Cross-sell',"journeyStart('flow-crosssell')",true)+'</section>'+crossSellSimulationIntelligenceBefore(p)};
+
+// Resolve the current chooser when clicked; early renders may retain an older handler.
+function c360BindSimulationLauncher(){const launcher=document.querySelector('#journeyLaunch');if(launcher)launcher.onclick=()=>journeyChoose();}
+const crossSellChooserBefore=journeyChoose;
+journeyChoose=function(){crossSellChooserBefore();const form=document.querySelector('#form');if(form&&!form.querySelector('#crossSellQuickStart'))form.insertAdjacentHTML('afterbegin','<section id="crossSellQuickStart" class="c360-list-guide"><small>SKENARIO CROSS-SELL</small><h2>Customer 360 → Opportunity → Task</h2><p>Putar 10 langkah Cross-sell KUR, dari produk dimiliki sampai Task follow-up.</p><button type="button" class="primary" onclick="document.querySelector(\'#modal\').close();journeyStart(\'flow-crosssell\')">▶ Mulai Simulasi Cross-sell</button></section>');};
+const crossSellLauncherRenderBefore=render;
+render=function(){crossSellLauncherRenderBefore();c360BindSimulationLauncher();};
+c360BindSimulationLauncher();
