@@ -30,8 +30,9 @@ function applyServer(result){
 async function bootConnected(){
  let s=await api('state');authUser=s.user;BPD_USER=authUser;
  memberList=(await api('members')).members;
+ if(document.readyState==='loading')await new Promise(resolve=>document.addEventListener('DOMContentLoaded',resolve,{once:true}));
  document.querySelector('#loginRoot')?.remove();document.documentElement.classList.remove('auth-pending');
- view=mobile?'Home':'Monitoring';focus='';resetLists();applyServer(s);
+ view=mobile?'Home':'Monitoring';focus='';resetLists();if(typeof restoreWorkspaceLocation==='function')restoreWorkspaceLocation(s.data);applyServer(s);if(typeof finishRestoreWorkspaceLocation==='function')finishRestoreWorkspaceLocation();
  clearInterval(pollTimer);pollTimer=setInterval(pollConnected,5000);
  if(typeof maybeStartTour==='function')maybeStartTour();
 }
