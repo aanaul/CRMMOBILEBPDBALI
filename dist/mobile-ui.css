@@ -1,7 +1,7 @@
 /* BPD Bali mobile: the CMS banking palette, adapted for one-handed use. */
-:root{--font-ui:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--ink:#15263f;--nav:#101f36;--teal:#174b79;--muted:#58687b;--line:#dce3ec;--bg:#f5f7fb;--surface:#fff;--gold:#b28839;--phone-width:430px;--phone-top:8px;--phone-bottom:80px;--phone-height:min(880px,calc(100dvh - 88px));--mobile-nav-height:72px}
+:root{--font-ui:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--ink:#15263f;--nav:#101f36;--teal:#174b79;--muted:#58687b;--line:#dce3ec;--bg:#f5f7fb;--surface:#fff;--gold:#b28839;--phone-width:430px;--phone-top:0px;--phone-bottom:0px;--phone-height:100dvh;--mobile-nav-height:64px}
 html{background:#e9eef5}
-body[data-mode=mobile]{font-family:var(--font-ui);color:var(--ink);background:var(--bg);font-size:14px;line-height:1.55;box-sizing:border-box;position:relative;width:min(430px,100%);max-width:430px;height:var(--phone-height);min-height:0;margin:var(--phone-top) auto var(--phone-bottom);overflow:hidden;border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 40px #17343c12}
+body[data-mode=mobile]{font-family:var(--font-ui);color:var(--ink);background:var(--bg);font-size:14px;line-height:1.55;box-sizing:border-box;position:relative;width:100%;max-width:none;height:100vh;height:100dvh;min-height:0;margin:0;overflow:hidden;border:0;border-radius:0;box-shadow:none}
 body[data-mode=mobile] *{box-sizing:border-box}
 body[data-mode=mobile] :is(button,input,select,textarea){font-family:inherit;touch-action:manipulation}
 body[data-mode=mobile] :is(button,.button){min-height:42px;border-radius:9px;border-color:var(--line);color:var(--ink);font-weight:500}
@@ -143,3 +143,76 @@ body[data-mode=mobile] #nav.mobileBottomTabs button span{font-size:10px!importan
 body[data-mode=mobile] #nav.mobileBottomTabs button{min-height:58px}
 body[data-mode=mobile] #form .c360-confirm input{width:18px;min-width:18px;height:18px}
 body[data-mode=mobile] .lead-workflow-summary .facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+
+/* Edge-to-edge viewport; no frame or space reserved for a hosting badge. */
+html{height:100%;background:var(--bg)}
+body[data-mode=mobile]>aside{position:fixed;height:calc(var(--mobile-nav-height) + var(--safe-bottom));padding-bottom:var(--safe-bottom)}
+body[data-mode=mobile] #nav.mobileBottomTabs{max-width:720px;margin:0 auto;padding:3px 0}
+body[data-mode=mobile] #nav.mobileBottomTabs button{min-height:56px;padding:5px 2px;gap:3px}
+body[data-mode=mobile] #nav.mobileBottomTabs button svg{width:20px;height:20px}
+body[data-mode=mobile] .content{padding:16px 14px 22px;max-width:1080px;margin:0 auto}
+body[data-mode=mobile] main>header{padding:8px max(14px,var(--safe-top));padding-top:calc(8px + var(--safe-top));min-height:56px;gap:6px}
+body[data-mode=mobile] #syncState{line-height:1.2;font-size:9px}
+body[data-mode=mobile] h1{font-size:23px}
+body[data-mode=mobile] .homewelcome{margin-bottom:14px}
+body[data-mode=mobile] .homewelcome h1{font-size:24px;margin:5px 0 7px}
+body[data-mode=mobile] .homewelcome p{margin:0;font-size:12px}
+body[data-mode=mobile] .home-attendance{padding:16px;border-radius:12px;margin-bottom:14px;box-shadow:0 4px 14px #102c4510}
+body[data-mode=mobile] .home-attendance h2{font-size:14px;margin:9px 0 12px}
+body[data-mode=mobile] .ha-top>span:first-child{font-size:9px;letter-spacing:1px}
+body[data-mode=mobile] .ha-status{padding:3px 7px;font-size:9px}
+body[data-mode=mobile] .ha-times{gap:9px}
+body[data-mode=mobile] .ha-times>div{padding:10px 12px;border-radius:10px}
+body[data-mode=mobile] .ha-times strong{font-size:26px;margin:3px 0 0;letter-spacing:.5px}
+body[data-mode=mobile] .ha-times :is(span,small){font-size:10px}
+body[data-mode=mobile] .ha-duration{margin:10px 0;font-size:11px}
+body[data-mode=mobile] .home-attendance .ha-clock{min-height:44px;padding:10px 14px;font-size:14px;border-radius:9px}
+body[data-mode=mobile] .ha-bottom{margin-top:5px}
+body[data-mode=mobile] .home-attendance .ha-bottom button{min-height:34px;font-size:11px}
+body[data-mode=mobile] .home-attendance .ha-note{margin:4px 0 0;font-size:10px;line-height:1.5}
+body[data-mode=mobile] .home-summary{margin:14px 0;gap:8px}
+body[data-mode=mobile] .home-summary button{padding:10px;min-height:67px}
+body[data-mode=mobile] .home-summary strong{font-size:21px}
+body[data-mode=mobile] .home-summary small{margin-top:3px}
+body[data-mode=mobile] :is(.panel,.record,.scaletools,.c360-section,.dash-panel){padding:15px}
+body[data-mode=mobile] .mobile-today{margin-bottom:16px}
+body[data-mode=mobile] .mobile-task-row{padding:10px 0}
+body[data-mode=mobile] .homemenutitle{margin:18px 0 10px;font-size:16px}
+body[data-mode=mobile] .homemenus button{min-height:100px;padding:13px}
+body[data-mode=mobile] .homemenus svg{width:21px;height:21px;margin-bottom:6px}
+body[data-mode=mobile] .homemenus small{font-size:10px;margin-top:3px}
+body[data-mode=mobile] .c360-hero{padding:18px 16px}
+body[data-mode=mobile] .c360-hero h1{font-size:23px}
+body[data-mode=mobile] .c360-metric{padding:12px}
+body[data-mode=mobile] .c360-metric strong{font-size:21px}
+body[data-mode=mobile] .c360-crosssell-highlight h2{font-size:18px}
+body[data-mode=mobile] .c360-crosssell-highlight p{font-size:12px}
+body[data-mode=mobile] .c360-card{padding:14px}
+body[data-mode=mobile] .c360-crosssell-card h3{font-size:18px;margin:12px 0 8px}
+body[data-mode=mobile] .c360-crosssell-card :is(p,li){font-size:13px}
+body[data-mode=mobile] .recordhero h1{font-size:23px}
+body[data-mode=mobile] .recordhero p{font-size:12px}
+body[data-mode=mobile] .dash-hero{padding:20px 16px}
+body[data-mode=mobile] .dash-hero h1{font-size:23px}
+body[data-mode=mobile] .dash-kpi strong{font-size:22px}
+body[data-mode=mobile] .toast{bottom:calc(var(--mobile-nav-height) + var(--safe-bottom) + 12px);max-width:min(440px,calc(100vw - 28px))}
+body[data-mode=mobile] #guidanceTour{inset:0;width:100%;height:100dvh;transform:none;padding:12px 12px calc(var(--mobile-nav-height) + var(--safe-bottom) + 12px)}
+body[data-mode=mobile] #loginRoot{position:fixed;inset:0;width:100%;height:100%;min-height:0;margin:0;overflow-y:auto}
+body[data-mode=mobile] #loginRoot .loginpanel{width:100%;max-width:420px;margin:auto}
+body[data-mode=mobile] dialog{max-width:560px;width:calc(100% - 24px)}
+@media(min-width:600px){
+ body[data-mode=mobile] .content{padding:22px 24px 28px}
+ body[data-mode=mobile] .homemenus{grid-template-columns:repeat(3,minmax(0,1fr))}
+ body[data-mode=mobile] .records{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body[data-mode=mobile] .ha-times strong{font-size:27px}
+ body[data-mode=mobile] .home-attendance{padding:18px 22px}
+ body[data-mode=mobile] .home-attendance .ha-times>div{padding:10px 14px}
+ body[data-mode=mobile] .ha-bottom{justify-content:flex-start;gap:24px}
+ body[data-mode=mobile] .ha-clock{max-width:360px}
+ body[data-mode=mobile] .home-summary button{padding:13px 16px}
+ body[data-mode=mobile] .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body[data-mode=mobile] .c360-cardgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+body[data-mode=mobile] .filterline>*,body[data-mode=mobile] .ref-filter{min-width:0;max-width:100%}
+body[data-mode=mobile] .filterline label{display:grid;width:100%;gap:5px;font-size:10px}
+body[data-mode=mobile] .filterline label select{width:100%;min-width:0;max-width:100%}
