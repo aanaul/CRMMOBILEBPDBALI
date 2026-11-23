@@ -9,7 +9,7 @@ function stageChangeFields(s){
  if(!s)return '';
  const negative=['lost','cancelled'].includes(s.type),won=s.type==='won';
  let names=negative?stageReasonNames(s.type):[];
- return '<p class="transition-hint">'+(won?'Catat hasil kesepakatan yang berhasil. Kategori alasan penolakan tidak diperlukan.':negative?'Pilih alasan '+(s.type==='lost'?'gagal':'pembatalan')+' dan jelaskan konteksnya.':'Catat perkembangan tahap jika diperlukan. Tidak ada alasan penutupan untuk tahap proses.')+'</p>'+(negative?'<label>Kategori alasan '+(s.type==='lost'?'gagal':'pembatalan')+'<select name="reasonCode" required><option value="">Pilih kategori alasan</option>'+names.map(n=>'<option value="'+E(n)+'">'+E(n)+'</option>').join('')+'</select></label>':'')+area(won?'Ringkasan hasil / bukti keberhasilan':negative?'Detail alasan':'Catatan progres (opsional)','reason','',won||negative)+field(won?'Referensi kesepakatan (jika ada)':'Referensi (jika ada)','reference')+(s.type!=='process'?'<p class="hint">Task yang masih terbuka pada Opportunity ini akan dibatalkan dan tetap tersimpan dalam riwayat.</p>':'');
+ return '<p class="transition-hint">'+(won?'Catat hasil kesepakatan yang berhasil. Kategori alasan penolakan tidak diperlukan.':negative?'Pilih alasan '+(s.type==='lost'?'gagal':'pembatalan')+' dan jelaskan konteksnya.':'Catat perkembangan tahap jika diperlukan. Tidak ada alasan penutupan untuk tahap proses.')+'</p>'+(negative?'<label>Kategori alasan '+(s.type==='lost'?'gagal':'pembatalan')+'<select name="reasonCode" required><option value="">Pilih kategori alasan</option>'+names.map(n=>'<option value="'+E(n)+'">'+E(n)+'</option>').join('')+'</select></label>':'')+area(won?'Ringkasan hasil / bukti keberhasilan':negative?'Detail alasan':'Catatan progres (opsional)','reason','',won||negative)+field(won&&s.requiresReference?'Referensi realisasi (wajib)':won?'Referensi kesepakatan (jika ada)':'Referensi (jika ada)','reference','','text',!!(won&&s.requiresReference))+(s.type!=='process'?'<p class="hint">Task yang masih terbuka pada Opportunity ini akan dibatalkan dan tetap tersimpan dalam riwayat.</p>':'');
 }
 function updateStageChangeFields(){const f=document.querySelector('#form'),s=stageDefs().find(s=>s.id===f.elements.stageId.value);document.querySelector('#stageChangeFields').innerHTML=stageChangeFields(s);document.querySelector('#formerror').textContent=''}
 changeStage=function(id){
@@ -19,13 +19,14 @@ changeStage=function(id){
  const s=stageDefs().find(s=>s.id===f.stageId);if(!s||(!s.active&&s.id!==o.stageId&&s.name!==o.stage))throw Error('Pilih tahap aktif.');
  const negative=['lost','cancelled'].includes(s.type),reason=String(f.reason||'').trim();
  if(negative&&!stageReasonNames(s.type).includes(f.reasonCode))throw Error('Pilih kategori alasan yang sesuai.');
+ if(s.type==='won'&&s.requiresReference&&!String(f.reference||'').trim())throw Error('Isi referensi realisasi yang sudah dikonfirmasi.');
  if(s.type!=='process'&&!reason)throw Error(s.type==='won'?'Isi ringkasan hasil keberhasilan.':'Isi detail alasan.');
- const old=o.stage;
+ const old=o.stage,moved=o.stageId?s.id!==o.stageId:s.name!==o.stage;
  if(s.type!=='process'){
  if(o.outcome==='Aktif')o.lastProcessStage=o.stage;
- db.tasks.filter(t=>t.opp===id&&isOpen(t)).forEach(t=>{t.status='Dibatalkan';t.cancelReason='Opportunity '+s.name+': '+reason});o.closed=now();
+ db.tasks.filter(t=>t.opp===id&&isOpen(t)).forEach(t=>{t.status='Dibatalkan';t.cancelReason='Opportunity '+s.name+': '+reason});if(moved||!o.closed)o.closed=now();
  }else delete o.closed;
- Object.assign(o,{stage:s.name,stageId:s.id,outcome:opportunityOutcome(s),reason,reasonCode:negative?f.reasonCode:'',reference:String(f.reference||'').trim(),slaDays:Number(s.sla),entered:now()});
+ Object.assign(o,{stage:s.name,stageId:s.id,outcome:opportunityOutcome(s),reason,reasonCode:negative?f.reasonCode:'',reference:String(f.reference||'').trim(),slaDays:moved?Number(s.sla):(o.slaDays??Number(s.sla)),entered:moved?now():(o.entered||now())});
  record('Ubah tahap Opportunity',id,old+' → '+s.name+(reason?' / '+reason:''));
  });
 };
