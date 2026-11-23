@@ -4,7 +4,7 @@ const listBeforeStatus=getList;
 getList=function(name=view){const rows=listBeforeStatus(name);return name==='Nasabah'?rows.filter(p=>customerStatusChip==='Semua'||statusOfCustomer(p)===customerStatusChip):rows};
 const scaleBeforeStatus=scaleList;
 scaleList=function(){let html=scaleBeforeStatus();if(view==='Nasabah'){
- const all=db.profiles.filter(p=>p.relation==='Customer'&&mine(p));
+ const all=db.profiles.filter(p=>p.relation==='Customer'&&mine(p)&&(typeof dateRecordMatches!=='function'||dateRecordMatches('Nasabah',p)));
  const chips='<div class="rangechips customerchips" aria-label="Status nasabah">'+['Aktif','Inactive','Semua'].map(s=>'<button class="'+(customerStatusChip===s?'active':'')+'" aria-pressed="'+(customerStatusChip===s)+'" onclick="customerStatusChip=\''+s+'\';listPage=1;renderContent()">'+(s==='Aktif'?'Nasabah Aktif':s)+' <b>'+all.filter(p=>s==='Semua'||statusOfCustomer(p)===s).length+'</b></button>').join('')+'</div>';
  html=html.replace('<div class="scaletools">',chips+'<div class="scaletools">');
  }return html};
