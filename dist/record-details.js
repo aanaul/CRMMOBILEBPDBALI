@@ -61,7 +61,7 @@ correction=function(kind,id){
  db.corrections.push({id:uid('CR'),kind:'profile',record:id,field:f.field,before:p[f.field]||'',proposed:f.proposed,reason:f.reason,owner:p.owner,status:'Menunggu',created:now()});record('Ajukan koreksi Nasabah',id,customerCorrectionFields[f.field]+': '+f.reason);
  });showCorrectionBefore();
 };
-function showCorrectionBefore(){let p=profile(focus),f=document.querySelector('#form');if(p&&f)document.querySelector('#correctionBefore').textContent='Data saat ini: '+(p[f.elements.field.value]||'Belum diisi')}
+function showCorrectionBefore(){let p=profile(focus),f=document.querySelector('#form');if(f)nikConstraints(f.elements.proposed,f.elements.field.value==='nik');if(p&&f)document.querySelector('#correctionBefore').textContent='Data saat ini: '+(p[f.elements.field.value]||'Belum diisi')}
 const correctionReviewBeforeRecord=reviewCorrection;
 reviewCorrection=function(id,decision){
  let cr=db.corrections.find(c=>c.id===id);if(cr?.kind!=='profile')return correctionReviewBeforeRecord(id,decision);
