@@ -24,7 +24,7 @@ async function logoutConnected(){try{await api('logout',{})}catch{}logoutLocal()
 function applyServer(result){
  authUser=result.user||authUser;BPD_USER=authUser;db=result.data;serverBase=clone(db);serverRevision=result.revision;
  BPD_MASTERS=db.config.masters;
- const process=stageDefs().filter(x=>x.type==='process').map(x=>x.name);stages.splice(0,stages.length,...process);
+ const process=stageDefs().filter(x=>x.type==='process'&&x.active!==false).map(x=>x.name);stages.splice(0,stages.length,...process);
  if(memberList.length)owners.splice(0,owners.length,...memberList.filter(m=>m.role==='AO'&&m.active!==false).map(m=>m.name));
  syncMessage='Tersinkron';render();
 }
