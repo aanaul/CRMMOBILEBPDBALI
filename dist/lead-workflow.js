@@ -1,7 +1,7 @@
 /* Module 1: manual lead acquisition, qualification, referral and SLA. No AI. */
 const LEAD_GUIDANCE={Cool:'Kebutuhan belum terkonfirmasi; lakukan kontak awal.',Warm:'Kebutuhan terkonfirmasi, informasi atau waktu pembelian belum lengkap.','Hot 1':'Kebutuhan dan produk sesuai; lengkapi data serta rencana tindak lanjut.','Hot 2':'Kebutuhan, kelengkapan awal dan target waktu sudah jelas; siap ditawarkan.'};
 function leadCall(name,...args){return name+'('+args.map(x=>E(JSON.stringify(x))).join(',')+')'}
-function leadPolicy(){return {responseDays:1,qualificationDays:5,branches:['Cabang Denpasar'],...db.config.leadWorkflow,guidance:{...LEAD_GUIDANCE,...db.config.leadWorkflow?.guidance}}}
+function leadPolicy(){return {responseDays:1,qualificationDays:5,branches:['BPD Bali HQ Renon','BPD Bali Capem Nusa Dua'],...db.config.leadWorkflow,guidance:{...LEAD_GUIDANCE,...db.config.leadWorkflow?.guidance}}}
 function leadOpportunityCount(l){return db.leadOpportunityCounts?.[l.id]??db.opps.filter(o=>o.lead===l.id).length}
 function linkedLeadHasOpportunity(l){return l.status==='Converted'||leadOpportunityCount(l)>0}
 function leadOpportunities(l){return db.opps.filter(o=>o.lead===l.id&&mine(o))}
