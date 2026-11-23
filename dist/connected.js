@@ -7,18 +7,19 @@ const activeMaster=(kind)=>masters()?.[kind]?.filter(x=>x.active)||[];
 const stageDefs=()=>masters()?.stages||[];
 const currentToken=()=>sessionStorage.getItem('bpd-session')||'';
 async function api(path,data,method){
- let r=await fetch(API_ORIGIN+'/api/'+path,{method:method||(data?'POST':'GET'),headers:{'Content-Type':'application/json',...(currentToken()?{Authorization:'Bearer '+currentToken()}: {})},...(data?{body:JSON.stringify(data)}:{})});
+ let r=await fetch(API_ORIGIN+'/api/'+path,{method:method||(data?'POST':'GET'),headers:{'Content-Type':'application/json',...(activeBranch?{'X-BPD-Branch':activeBranch}:{}),...(currentToken()?{Authorization:'Bearer '+currentToken()}: {})},...(data?{body:JSON.stringify(data)}:{})});
  let result;try{result=await r.json()}catch{throw Error('Server belum merespons. Coba lagi.')}
- if(!r.ok){let e=Object.assign(Error(result.error||'Permintaan gagal'),{status:r.status});if(r.status===401&&path!=='login')logoutLocal();throw e}return result;
+ if(!r.ok){let e=Object.assign(Error(result.error||'Permintaan gagal'),{status:r.status,code:result.code});if(['branch_required','branch_changed'].includes(result.code)&&!choosingBranch){choosingBranch=true;openBranchSelection(false);}if(r.status===401&&path!=='login')logoutLocal();throw e}return result;
 }
 function loginPage(message=''){
+ document.querySelector('#branchRoot')?.remove();activeBranch='';choosingBranch=false;
  if(document.querySelector('#modal')?.open)document.querySelector('#modal').close();
  let root=document.querySelector('#loginRoot');if(!root){root=document.createElement('div');root.id='loginRoot';document.body.append(root)}
  root.innerHTML='<div class="loginhero"><div class="loginbrand">BPD BALI</div><span class="loginbrandline"></span><h2>Membangun relasi.<br>Menumbuhkan peluang.</h2><p>Satu ruang kerja untuk mendampingi nasabah dan mengembangkan potensi Bali.</p></div><section class="loginpanel"><span class="bankword">BPD BALI</span><div class="loginaccent"></div><small>RELATIONSHIP MANAGEMENT</small><h1>Selamat datang</h1><p>Masuk untuk melanjutkan pekerjaan Anda.</p><form id="loginForm"><label>User ID<input name="id" autocomplete="username" placeholder="Masukkan User ID" required></label><label>Password<div class="passwordwrap"><input name="password" type="password" autocomplete="current-password" placeholder="Masukkan password" required><button type="button" onclick="const p=this.previousElementSibling;p.type=p.type===\'password\'?\'text\':\'password\';this.textContent=p.type===\'password\'?\'Lihat\':\'Sembunyikan\'">Lihat</button></div></label><div id="loginError" role="alert">'+E(message)+'</div><button class="primary loginbutton">Masuk</button></form><div class="loginfoot">CRM BPD Bali · 2 cabang<br>Hubungi Superadmin jika akses Anda bermasalah.</div></section>';
  document.documentElement.classList.add('auth-pending');
  document.querySelector('#loginForm').onsubmit=async e=>{e.preventDefault();let f=e.target,b=f.querySelector('.loginbutton');b.disabled=true;b.textContent='Memeriksa akun…';document.querySelector('#loginError').textContent='';try{let values=Object.fromEntries(new FormData(f)),r=await api('login',values);sessionStorage.setItem('bpd-session',r.token);await bootConnected()}catch(err){document.querySelector('#loginError').textContent=err.message}finally{b.disabled=false;b.textContent='Masuk'}};
 }
-function logoutLocal(){if(typeof journey!=='undefined'&&journey)journeyExit();authUser=null;BPD_USER=null;serverBase=null;sessionStorage.removeItem('bpd-session');clearInterval(pollTimer);loginPage()}
+function logoutLocal(){if(typeof journey!=='undefined'&&journey)journeyExit();authUser=null;BPD_USER=null;serverBase=null;activeBranch='';choosingBranch=false;document.querySelector('#branchRoot')?.remove();sessionStorage.removeItem('bpd-session');clearInterval(pollTimer);loginPage()}
 async function logoutConnected(){try{await api('logout',{})}catch{}logoutLocal()}
 function applyServer(result){
  authUser=result.user||authUser;BPD_USER=authUser;db=result.data;serverBase=clone(db);serverRevision=result.revision;
@@ -27,17 +28,19 @@ function applyServer(result){
  if(memberList.length)owners.splice(0,owners.length,...memberList.filter(m=>m.role==='AO'&&m.active!==false).map(m=>m.name));
  syncMessage='Tersinkron';render();
 }
-async function bootConnected(){
+async function bootConnected(){const info=await api('branches');authUser=info.user;BPD_USER=authUser;if(info.selected){activeBranch=info.selected;await openConnectedWorkspace()}else await branchSelectionPage(info);}
+async function openConnectedWorkspace(){
  let s=await api('state');authUser=s.user;BPD_USER=authUser;
  memberList=(await api('members')).members;
  if(document.readyState==='loading')await new Promise(resolve=>document.addEventListener('DOMContentLoaded',resolve,{once:true}));
- document.querySelector('#loginRoot')?.remove();document.documentElement.classList.remove('auth-pending');
+ document.querySelector('#loginRoot')?.remove();document.querySelector('#branchRoot')?.remove();choosingBranch=false;document.documentElement.classList.remove('auth-pending');
  view=mobile?'Home':'Monitoring';focus='';resetLists();if(typeof restoreWorkspaceLocation==='function')restoreWorkspaceLocation(s.data);applyServer(s);if(typeof finishRestoreWorkspaceLocation==='function')finishRestoreWorkspaceLocation();
  clearInterval(pollTimer);pollTimer=setInterval(pollConnected,5000);
+ if(typeof fieldPoll!=='undefined'){clearInterval(fieldPoll);fieldPoll=setInterval(()=>{if(authUser&&!choosingBranch&&!journey&&(['Absen','Lokasi Tim'].includes(view)||fieldWatch!==null))loadField()},15000);}
  if(typeof maybeStartTour==='function')maybeStartTour();
 }
 async function pollConnected(){
- if(!authUser||saving||journey||document.querySelector('#modal')?.open)return;
+ if(!authUser||!activeBranch||choosingBranch||saving||journey||document.querySelector('#modal')?.open)return;
  try{let s=await api('state');if(s.revision!==serverRevision||!jsonSame(s.user,authUser)||!jsonSame(s.data.notifications,db.notifications)){memberList=(await api('members')).members;applyServer(s)}}catch(e){if(e.status!==401){syncMessage='Koneksi terputus';renderSyncStatus()}}
 }
 const simulationRecordForLocal=record;
@@ -71,7 +74,7 @@ const actorBeforeConnected=actor;
 actor=function(){return journey?actorBeforeConnected():authUser?.name||''};
 mine=function(x){return !!x&&(journey?actor()==='Supervisor'||actor()==='Administrator'||x.owner===actor():!!authUser&&(authUser.role!=='AO'||x.ownerId===authUser.id||x.owner===authUser.name))};
 currentAccount=function(){if(journey){const name=actor();return {name,role:name==='Supervisor'?'Supervisor':name,initials:name.split(' ').map(n=>n[0]).slice(0,2).join('')}}return {name:authUser?.name||'',role:authUser?.role||'',initials:(authUser?.name||'').slice(0,2).toUpperCase()}};
-openAccount=function(){modal('Profil pengguna',detailFacts([['Nama',authUser.name],['User ID',authUser.id],['Role',authUser.role],['Cabang',userBranchLabel()],['Cabang workspace',workspaceBranchLabel()]])+'<div class="actions">'+btn('Ubah password',"document.querySelector('#modal').close();changeOwnPassword()")+btn('Keluar',"document.querySelector('#modal').close();logoutConnected()")+'</div>',()=>{});document.querySelector('#form .actions:last-child .primary')?.remove()};
+openAccount=function(){modal('Profil pengguna',detailFacts([['Nama',authUser.name],['User ID',authUser.id],['Role',authUser.role],['Cabang',userBranchLabel()],['Branch aktif',activeBranch]])+'<div class="actions">'+btn('Ganti branch',"openBranchSelection()")+btn('Ubah password',"document.querySelector('#modal').close();changeOwnPassword()")+btn('Keluar',"document.querySelector('#modal').close();logoutConnected()")+'</div>',()=>{});document.querySelector('#form .actions:last-child .primary')?.remove()};
 function changeOwnPassword(){modal('Ubah password',field('Password saat ini','current','','password',true)+field('Password baru (minimal 6 karakter)','password','','password',true),f=>{api('password',f).then(()=>{logoutLocal();toast('Password diubah. Silakan masuk kembali.')}).catch(e=>toast(e.message))})}
 applicationInfo=function(){modal('Informasi aplikasi',detailFacts([['Aplikasi','BPD Bali CRM'],['Data','Backend bersama · CMS dan mobile'],['Akun',authUser.name+' / '+authUser.role],['Sinkronisasi',syncMessage],['Sumber status pengajuan','Input manual pengguna'],['Integrasi sistem Bank','Belum dikonfigurasi']]),()=>{})};
 function renderSyncStatus(){let n=document.querySelector('#syncState');if(n)n.textContent=syncMessage}

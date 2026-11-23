@@ -1,6 +1,6 @@
 /* Per-tab, per-account navigation recovery. No forms, tokens or simulation data. */
 let workspaceLocationRestoring=false,workspaceLocationScroll=null,workspaceLocationTimer;
-const workspaceLocationKey=()=>authUser?'bpd-location-v1:'+ (mobile?'mobile:':'cms:')+authUser.id:'';
+const workspaceLocationKey=()=>authUser?'bpd-location-v1:'+ (mobile?'mobile:':'cms:')+authUser.id+':'+(typeof activeBranch!=='undefined'?activeBranch:''):'';
 const workspaceLocationRoutes=['Monitoring','Leads','Nasabah','Peluang','Agenda','Pengajuan','Pengajuan detail','Persetujuan','Laporan','Notifikasi','Pengaturan','Member','Absen','Lokasi Tim','Home','Profil User','Lainnya','Riwayat','Lead detail','Nasabah detail','Opportunity detail','Aktivitas detail'];
 const workspaceLocationFields=[
  ['q',()=>q,v=>q=v],['month',()=>month,v=>month=v],['statusFilter',()=>statusFilter,v=>statusFilter=v],['ownerFilter',()=>ownerFilter,v=>ownerFilter=v],
