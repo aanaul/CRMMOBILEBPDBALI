@@ -261,7 +261,7 @@ scaleNotifications=function(){
  return titleBlock('Notifikasi','Reminder ke AO dan eskalasi ke atasan. Owner tetap sama sampai ada Reassign.')+detailPanel('Perlu perhatian',active.map(row).join('')||empty('Tidak ada notifikasi aktif.'))+detailPanel('Riwayat terselesaikan',past.map(row).join('')||empty('Belum ada riwayat.'));
 };
 const oppCardBeforeUnified=oppCard;
-oppCard=function(o){let root=document.createElement('div');root.innerHTML=oppCardBeforeUnified(o);let top=root.querySelector('.recordtop');if(top)top.innerHTML=badge(o.stage);return root.innerHTML};
+oppCard=function(o){let root=document.createElement('div');root.innerHTML=oppCardBeforeUnified(o);let top=root.querySelector('.recordtop');if(top){top.classList.add('has-opportunity-origin');top.innerHTML=badge(o.stage)+(typeof opportunityOriginHtml==='function'?opportunityOriginHtml(o,true):'');}return root.innerHTML};
 const contentFinalBefore=renderContent;
 renderContent=function(){
  contentFinalBefore();
