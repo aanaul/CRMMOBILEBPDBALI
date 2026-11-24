@@ -21829,7 +21829,9 @@ function qm() {
 function Jm() {
 	let [e, t] = (0, b.useState)(!1), [n, r] = (0, b.useState)("Detail");
 	Hm = t, Gm = r;
-	let i = (0, b.useRef)(null);
+	let i = (0, b.useRef)(null), a = (0, b.useCallback)((e) => {
+		i.current = e, e && Vm && (e.append(Vm), Vm.setAttribute("open", ""), Vm.setAttribute("role", "presentation"), queueMicrotask(() => Vm.querySelector("input:not([type=hidden]):not([disabled]),select:not([disabled]),textarea:not([disabled]),.modalhead button")?.focus()));
+	}, []);
 	return (0, b.useLayoutEffect)(() => {
 		if (e && i.current && Vm) {
 			i.current.append(Vm), Vm.setAttribute("open", ""), Vm.setAttribute("role", "presentation");
@@ -21866,7 +21868,7 @@ function Jm() {
 					children: "Formulir CRM BPD Bali. Field wajib dan pesan kesalahan ditampilkan pada formulir."
 				}),
 				/* @__PURE__ */ (0, G.jsx)("div", {
-					ref: i,
+					ref: a,
 					className: "crm-dialog-holder"
 				})
 			]
