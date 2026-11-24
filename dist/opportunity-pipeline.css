@@ -1,0 +1,14 @@
+/* Dynamic stage count: keep every Opportunity stage in one scrollable row. */
+body[data-mode] main,body[data-mode] #app{min-width:0}
+body[data-mode] #app .opportunity-pipeline{width:100%;max-width:100%;min-width:0}
+body[data-mode] #app .opportunity-pipeline>.board{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(260px,300px);align-items:start;gap:16px;width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;overflow-y:auto;max-height:max(360px,70dvh);padding:2px 2px 16px;scrollbar-width:auto;scrollbar-color:#6685a3 #e5edf5;overscroll-behavior-x:contain;scroll-snap-type:x proximity;touch-action:pan-x pan-y pinch-zoom;-webkit-overflow-scrolling:touch}
+body[data-mode] #app .opportunity-pipeline .column{min-width:0;scroll-snap-align:start}
+.opportunity-pipeline>.board::-webkit-scrollbar{width:12px;height:12px}
+.opportunity-pipeline>.board::-webkit-scrollbar-track{background:#e5edf5;border-radius:8px}
+.opportunity-pipeline>.board::-webkit-scrollbar-thumb{background:#6685a3;border:2px solid #e5edf5;border-radius:8px}
+.opportunity-pipeline>.board:focus-visible{outline:3px solid #7ca5c8;outline-offset:3px}
+.pipeline-scroll-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0;color:#536780}
+.pipeline-scroll-tools p{margin:0;font-size:.875rem;line-height:1.5}
+.pipeline-scroll-tools>div{display:flex;gap:8px;flex-shrink:0}
+body[data-mode] .pipeline-scroll-tools button{min-height:42px;font-size:.875rem}
+@media(max-width:600px){.pipeline-scroll-tools{align-items:stretch;flex-direction:column}.pipeline-scroll-tools>div{justify-content:flex-end}body[data-mode] #app .opportunity-pipeline>.board{grid-auto-columns:minmax(250px,85vw);gap:12px;max-height:max(320px,68dvh)}.pipeline-scroll-tools button{flex:1}}

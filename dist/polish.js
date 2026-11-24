@@ -55,11 +55,13 @@ newTask=function(pid='',oid='',lid=''){newTaskBeforePolish(pid,oid,lid);let form
 contextLabel=function(t){let o=opp(t.opp),p=profile(t.profile);return '<div class="contextline"><span class="contextpill">Terkait '+(o?'Opportunity':t.lead||p?.relation!=='Customer'?'Lead':'Nasabah')+'</span><span>'+E(o?.name||pname(t.profile))+'</span></div>'};
 denseBoard=function(items){
  let active=items.filter(o=>o.outcome==='Aktif');
- return '<div class="board">'+stages.map(s=>{
+ return '<section class="opportunity-pipeline"><div class="pipeline-scroll-tools"><p>Geser untuk melihat seluruh tahap. Scroll di area pipeline untuk melihat kartu lainnya.</p><div>'+btn('Geser kiri',"scrollOpportunityPipeline(-1)")+btn('Geser kanan',"scrollOpportunityPipeline(1)")+'</div></div><div class="board" tabindex="0" role="region" aria-label="Pipeline Opportunity, geser horizontal untuk melihat seluruh tahap">'+stages.map(s=>{
  let a=active.filter(o=>o.stage===s),sum=a.reduce((n,o)=>n+(Number(o.value)||0),0);
  return '<section class="column"><div class="columnhead"><b>'+E(s)+'</b><span>'+a.length+'</span></div><div class="stagetotal">'+rup(sum)+'</div>'+a.slice(0,5).map(oppCard).join('')+(a.length>5?btn('Lihat semua '+a.length,"stageFilter='"+s+"';listStatus='Aktif';listKind='Daftar';listPage=1;renderContent()"):'')+'</section>';
- }).join('')+'</div><p class="hint">Total nominal seluruh opportunity aktif sesuai filter. Nilai indikatif, bukan pendapatan.</p>';
+ }).join('')+'</div></section><p class="hint">Total nominal seluruh opportunity aktif sesuai filter. Nilai indikatif, bukan pendapatan.</p>';
 };
 const scaleListBeforePolish=scaleList;
 scaleList=function(){if(view==='Peluang'&&listKind==='Pipeline'&&listStatus&&listStatus!=='Aktif'){listKind='Daftar'}return scaleListBeforePolish()};
 render();
+
+function scrollOpportunityPipeline(direction){const board=document.querySelector('.opportunity-pipeline .board');if(!board)return;const amount=Math.max(260,Math.min(board.clientWidth*.8,600));board.scrollBy({left:direction*amount,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
