@@ -1,0 +1,152 @@
+{
+  "checkedAt": "2026-11-24T04:14:58.291Z",
+  "environment": "Isolated D1/R2 emulator and component/unit checks",
+  "productionLoadTest": false,
+  "bankUAT": false,
+  "sourceDigest": "c2512c12be3f28abf7a5ec8b6dc19b5f8f74630bd378f3a83bf38c7f6840f664",
+  "total": 17,
+  "passed": 17,
+  "results": [
+    {
+      "name": "poc-readiness-api.mjs",
+      "status": "passed",
+      "durationMs": 6160,
+      "checks": [
+        "PASS: additive idempotent dummy setup; five roles and two-branch isolation; server denies readonly sync/convert/upload/config/escalation; central consolidated read; scoped targets with history/CAS; real confirmations separate from estimates; full acquisition→qualification→Opportunity→Won→Customer; direct cross-sell; private duplicate notice; visit approval; routed SPV escalation; manual untested UAT evidence and consistency checks."
+      ]
+    },
+    {
+      "name": "poc-readiness-ui.mjs",
+      "status": "passed",
+      "durationMs": 231,
+      "checks": [
+        "PASS: separate nominal categories, target actions for Head, readable branch/traceability sections, readonly API and function guards, untested UAT defaults, escaped evidence, working terminal-to-process reopening and navigation persistence."
+      ]
+    },
+    {
+      "name": "branch-access-api.mjs",
+      "status": "passed",
+      "durationMs": 5915,
+      "checks": [
+        "PASS: member branch assignment, HQ-only administration, unauthorized selection, immediate revocation, single/multiple branches, protected Superadmin access; User ID/password → mandatory branch choice; both branches; per-session selection, refresh state, profile switch clearing, stale-tab protection, AO ownership, admin scope, cross-branch write rejection, new-record stamping, duplicate privacy and fresh-login reset."
+      ]
+    },
+    {
+      "name": "identity-duplicates-api.mjs",
+      "status": "passed",
+      "durationMs": 7603,
+      "checks": [
+        "PASS: shared Lead/Customer duplicate API, normalized 0/+62/0062 phones, NIK-only and phone-only checks, cross-branch privacy, self exclusion, actual save prevention and concurrent device collision rejection."
+      ]
+    },
+    {
+      "name": "lead-workflow-api.mjs",
+      "status": "passed",
+      "durationMs": 7592,
+      "checks": [
+        "PASS: pre-qualified survey, SLA snapshots, internal referral identity, cross-owner duplicate privacy, normalized phone/NIK uniqueness, separate SLA notifications and resolution, qualified conversion, referral lineage, existing-customer linkage and no qualification rollback after Opportunity."
+      ]
+    },
+    {
+      "name": "referral-tracking-api.mjs",
+      "status": "passed",
+      "durationMs": 5662,
+      "checks": [
+        "PASS: referral product snapshot, server actor/history, manual handling and history tamper rejection; pre-qualified survey, SLA snapshots, internal referral identity, cross-owner duplicate privacy, normalized phone/NIK uniqueness, separate SLA notifications and resolution, qualified conversion, referral lineage, existing-customer linkage and no qualification rollback after Opportunity."
+      ]
+    },
+    {
+      "name": "escalation-api.mjs",
+      "status": "passed",
+      "durationMs": 5661,
+      "checks": [
+        "PASS escalation: AO priority over branch, recipient-only SPV visibility and actions, AO remains owner/read-only, admin fallback, rerouting, action validation, actor history, stale-write conflict, new deadline episodes and closure after trigger resolution."
+      ]
+    },
+    {
+      "name": "banking-stages-api.mjs",
+      "status": "passed",
+      "durationMs": 5073,
+      "checks": [
+        "PASS: two independent opportunities, no automatic Lost rollback, reasoned Qualified return blocked until all close, fresh handoff clears queue flag, existing Customer Lead rejected, direct Customer referral attribution validated.",
+        "PASS: real API shares nine-stage master across branches, allows product-relevant skipped stages, enforces Won realization evidence, keeps application statuses independent and persists customized stage guidance."
+      ]
+    },
+    {
+      "name": "banking-stages.mjs",
+      "status": "passed",
+      "durationMs": 81,
+      "checks": [
+        "PASS: five active banking process stages/three outcomes; stable IDs; migration retains aging, SLA snapshots, amounts, custom names, stage history, closed timestamps and separate application status; no duplicate names; idempotence."
+      ]
+    },
+    {
+      "name": "banking-stages-ui.mjs",
+      "status": "passed",
+      "durationMs": 66,
+      "checks": [
+        "PASS: banking detail path, funding survey skip guidance, credit Task guidance, current SLA snapshots, Won read-only path, legacy filter aliases, separate application semantics and escaped guidance."
+      ]
+    },
+    {
+      "name": "customer360.mjs",
+      "status": "passed",
+      "durationMs": 86,
+      "checks": [
+        "PASS: 10 tab renderers, escaping, product gaps, validation, document upload/read and access isolation.",
+        "PASS: explicit Cross-sell entry, six RFI inputs, payroll qualification, credit/funding signals, category filters, owned-product exclusion, active-opportunity deduplication.",
+        "PASS: 10-step cross-sell simulation, customer tabs, linked Task/Opportunity, active-opportunity result, deterministic replay and work-data isolation.",
+        "PASS: simulation launcher resolves latest chooser instead of retaining old scenario list."
+      ]
+    },
+    {
+      "name": "operations.mjs",
+      "status": "passed",
+      "durationMs": 86,
+      "checks": [
+        "PASS: contextual stages, custom stage names, scoped reasons, required evidence, stale reason clearing, task closure, role visibility, WITA boundaries, and win-rate denominator."
+      ]
+    },
+    {
+      "name": "lead-pipeline.mjs",
+      "status": "passed",
+      "durationMs": 71,
+      "checks": [
+        "PASS: all seven lifecycle columns with no duplicate/misclassified cards, Qualified versus Opportunity distinction, converted locks, escaped cards, SLA/Task links, mobile stage picker and bounded card rendering."
+      ]
+    },
+    {
+      "name": "task-chips.mjs",
+      "status": "passed",
+      "durationMs": 84,
+      "checks": [
+        "PASS: five Task chips, open today, non-overdue To Do, overdue, separate completed/cancelled, AO/type/calendar scope, WITA day boundaries and legacy navigation values."
+      ]
+    },
+    {
+      "name": "date-filters.mjs",
+      "status": "passed",
+      "durationMs": 109,
+      "checks": [
+        "PASS: Monday–Sunday WITA periods, leap months, inclusive date ranges and timezone boundaries, invalid range keeps applied filter, missing dates, Customer conversion date, Task schedule, filter before pagination, per-account/branch isolation, legacy month migration, persistence and reset."
+      ]
+    },
+    {
+      "name": "referral-tracking.mjs",
+      "status": "passed",
+      "durationMs": 71,
+      "checks": [
+        "PASS: original product retained, append-only referral history, member identity grouping, external organization separation, scoped search/report, multi-opportunity denominators, existing customers excluded from new conversions, direct-linked task/result attribution, period filters and incomplete/restricted outcomes."
+      ]
+    },
+    {
+      "name": "workspace-write.mjs",
+      "status": "passed",
+      "durationMs": 93,
+      "checks": [
+        "PASS: unrelated records merge; stale edits/settings reject; audit preserved; in-place conversion snapshot; latest-state validation; response revision/state.",
+        "PASS: external-isolate CAS retry preserves both edits and audits."
+      ]
+    }
+  ]
+}
