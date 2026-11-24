@@ -25,6 +25,16 @@
    line.before(details);details.append(summary,line);
    details.addEventListener('toggle',()=>filterState.set(key,details.open));
   });
+  document.querySelectorAll('#app .scaletools').forEach(tools=>{
+   const details=tools.querySelector('.mobile-filter-options');if(!details)return;
+   const dateBar=document.querySelector('#app>.date-filter-bar');
+   if(dateBar&&!details.contains(dateBar))details.querySelector('summary').after(dateBar);
+   const period=details.querySelector('.date-filter-summary')?.textContent?.trim()||'Semua tanggal';
+   const filters=Array.from(details.querySelectorAll('.filterline select')).filter(el=>el.selectedIndex>0).length;
+   const summary=details.querySelector('summary'),label='Filter · '+period+(filters?' · '+filters+' aktif':'');
+   if(summary.textContent!==label)summary.textContent=label;
+   details.dataset.active=String(filters>0||period!=='Semua tanggal');
+  });
   document.querySelectorAll('#nav button').forEach(button=>{
    const label=button.querySelector('span');if(label&&label.textContent==='Customer 360')button.setAttribute('aria-label','Customer 360');
   });

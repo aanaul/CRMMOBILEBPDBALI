@@ -1,6 +1,6 @@
 /* One view selector and Kanban presentation across Leads, Opportunity and devices. */
 const OPPORTUNITY_OUTCOME_CHIPS=[['Aktif','Aktif'],['Won','Berhasil (Won)'],['Lost','Lost'],['Cancelled','Cancelled'],['Semua','Semua']];
-function opportunityOutcomeRows(){const old=listStatus;try{listStatus='Semua';return getList('Peluang')}finally{listStatus=old}}
+function opportunityOutcomeRows(){const old=listStatus,oldStage=stageFilter;try{listStatus='Semua';stageFilter='';return getList('Peluang')}finally{listStatus=old;stageFilter=oldStage}}
 function chooseOpportunityOutcome(status){if(!OPPORTUNITY_OUTCOME_CHIPS.some(([v])=>v===status))return;listStatus=status;stageFilter='';listPage=1;renderContent();if(typeof persistWorkspaceLocation==='function')persistWorkspaceLocation()}
 function chooseCRMView(mode){if(view==='Leads'){leadPipelineMode(mode==='Pipeline'?'pipeline':'list');return}if(view!=='Peluang')return;listKind=mode;listPage=1;if(mode==='Pipeline'){listStatus='Semua';stageFilter=''}renderContent();if(typeof persistWorkspaceLocation==='function')persistWorkspaceLocation()}
 function crmPipelineSelector(){const current=view==='Leads'?(leadViewMode==='pipeline'?'Pipeline':'Daftar'):listKind;return '<div class="crm-view-switch" role="group" aria-label="Tampilan '+(view==='Leads'?'Leads':'Opportunity')+'">'+['Pipeline','Daftar'].map(mode=>'<button type="button" class="'+(current===mode?'active':'')+'" aria-pressed="'+(current===mode)+'" onclick="chooseCRMView(\''+mode+'\')">'+mode+'</button>').join('')+'</div>'}
