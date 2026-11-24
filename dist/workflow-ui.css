@@ -91,3 +91,7 @@ body[data-mode=mobile] #app .intro>div:first-child{display:contents}
 body[data-mode=mobile] #app .intro h1{grid-column:1;grid-row:1;align-self:center}
 body[data-mode=mobile] #app .intro p{grid-column:1/-1;grid-row:2}
 body[data-mode=mobile] #app .intro:has(.actions button:nth-child(2))>.actions{grid-row:3}
+
+body[data-mode=mobile] #app .contextline{font-size:13px;line-height:1.5;gap:8px;margin-top:10px}
+body[data-mode=mobile] #app .contextpill{font-size:12px;line-height:1.4;padding:3px 6px;white-space:normal}
+body[data-mode=mobile] #app .contextline>span[hidden]{display:none}
