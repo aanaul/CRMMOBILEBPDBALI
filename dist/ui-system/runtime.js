@@ -21852,9 +21852,7 @@ function Jm() {
 			onEscapeKeyDown: (e) => {
 				e.preventDefault(), qm();
 			},
-			onInteractOutside: (e) => {
-				e.preventDefault(), qm();
-			},
+			onInteractOutside: (e) => e.preventDefault(),
 			onCloseAutoFocus: (e) => {
 				e.preventDefault(), Km?.isConnected && Km.focus();
 			},
