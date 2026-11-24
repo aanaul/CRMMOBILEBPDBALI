@@ -11,7 +11,7 @@ function cleanLabels(root){
 }
 function wireCards(root){
  root?.querySelectorAll('article.record').forEach(card=>{
- let target=Array.from(card.querySelectorAll('button[onclick]')).find(b=>/go\('(Lead detail|Opportunity detail|Aktivitas detail|Nasabah detail)'/.test(b.getAttribute('onclick')));
+ let target=Array.from(card.querySelectorAll('button[onclick]:not(.opportunity-origin-link)')).find(b=>/go\('(Lead detail|Opportunity detail|Aktivitas detail|Nasabah detail)'/.test(b.getAttribute('onclick')));
  if(!target)return;
  card.tabIndex=0;card.setAttribute('role','link');card.setAttribute('aria-label','Buka detail '+(card.querySelector('h3')?.textContent||''));
  card.onclick=e=>{if(!e.target.closest('button,a,input,select,textarea,label,summary'))target.click()};
