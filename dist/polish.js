@@ -61,7 +61,7 @@ denseBoard=function(items){
  }).join('')+'</div></section><p class="hint">Total nominal seluruh opportunity aktif sesuai filter. Nilai indikatif, bukan pendapatan.</p>';
 };
 const scaleListBeforePolish=scaleList;
-scaleList=function(){if(view==='Peluang'&&listKind==='Pipeline'&&listStatus&&listStatus!=='Aktif'){listKind='Daftar'}return scaleListBeforePolish()};
+scaleList=function(){return scaleListBeforePolish()};
 render();
 
 function scrollOpportunityPipeline(direction){const board=document.querySelector('.opportunity-pipeline .board');if(!board)return;const amount=Math.max(260,Math.min(board.clientWidth*.8,600));board.scrollBy({left:direction*amount,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}

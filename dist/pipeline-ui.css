@@ -33,3 +33,8 @@ body[data-mode=mobile] #app .opportunity-outcome-chips{flex-wrap:nowrap;overflow
 body[data-mode=mobile] #app .opportunity-outcome-chips button{flex:0 0 auto}
 body[data-mode=mobile] #app :is(.lead-pipeline-board,.opportunity-pipeline>.board){grid-auto-columns:minmax(250px,85%);gap:12px;max-height:max(320px,68dvh)}
 @media(max-width:600px){body[data-mode] #app :is(.lead-pipeline-board,.opportunity-pipeline>.board){grid-auto-columns:minmax(250px,85%);max-height:max(320px,68dvh)}}
+
+body[data-mode] #app .opportunity-pipeline .column[data-outcome=Won]{border-top:3px solid #348068}
+body[data-mode] #app .opportunity-pipeline .column[data-outcome=Lost]{border-top:3px solid #bc625c}
+body[data-mode] #app .opportunity-pipeline .column[data-outcome=Cancelled]{border-top:3px solid #7a8797}
+body[data-mode] #app .pipeline-column-empty{font-size:13px;line-height:1.6;color:#61738a;padding:16px;margin:0}
