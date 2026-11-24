@@ -182,3 +182,10 @@ body[data-mode=mobile] #app .opportunity-pipeline .column{width:auto;max-width:n
 @media(max-width:359px){body[data-mode=mobile] .detailfacts{grid-template-columns:minmax(0,1fr)}}
 body[data-mode=mobile] #nav.mobileBottomTabs button span{white-space:normal;max-width:70px;text-align:center}
 body[data-mode=mobile] #nav.mobileBottomTabs button{justify-content:flex-start}
+/* Approval shortcut is a compact row, never an unconstrained SVG canvas. */
+body[data-mode=mobile] button.homeapproval{display:flex;align-items:center;gap:12px;width:100%;height:auto;min-height:76px;margin:0 0 20px;padding:14px 16px;text-align:left;white-space:normal;background:#fff;border:1px solid #dce5ef;border-radius:14px;color:#182b45}
+body[data-mode=mobile] .homeapproval>svg{display:block;width:28px;height:28px;min-width:28px;max-width:28px;max-height:28px;flex:0 0 28px;color:#174b79}
+body[data-mode=mobile] .homeapproval>span:first-of-type{display:flex;flex:1 1 0;min-width:0;flex-direction:column;gap:4px}
+body[data-mode=mobile] .homeapproval b{display:block;font-size:15px;font-weight:600;line-height:1.4}
+body[data-mode=mobile] .homeapproval small{display:block;font-size:13px;line-height:1.5;color:#596b80}
+body[data-mode=mobile] .homeapproval>span:last-child{flex:0 0 auto;font-size:20px;line-height:1;color:#687c92}
