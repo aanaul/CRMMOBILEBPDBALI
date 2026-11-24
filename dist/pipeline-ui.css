@@ -1,0 +1,35 @@
+/* Shared model; final layer intentionally wins over desktop/mobile legacy rules. */
+body[data-mode] #app .crm-view-switch{display:flex;align-items:center;gap:4px;width:fit-content;max-width:100%;padding:4px;margin:0 0 18px;background:#fff;border:1px solid #cdd9e7;border-radius:10px;box-sizing:border-box}
+body[data-mode] #app .crm-view-switch button:not(:disabled){display:inline-flex;align-items:center;justify-content:center;min-width:100px;min-height:40px;margin:0;padding:9px 16px;font-size:14px;font-weight:500;line-height:1.4;border:1px solid transparent;border-radius:7px;background:transparent;color:#29455f;box-shadow:none}
+body[data-mode] #app .crm-view-switch button:not(:disabled):hover{background:#edf3fa;color:#173e65;border-color:transparent}
+body[data-mode] #app .crm-view-switch button.active:not(:disabled){background:#194f78;color:#fff;border-color:#194f78;box-shadow:none}
+body[data-mode] #app .crm-view-switch button.active:not(:disabled):hover{background:#123d60;color:#fff;border-color:#123d60}
+body[data-mode] #app .crm-view-switch button:focus-visible{outline:3px solid #b58222;outline-offset:2px}
+body[data-mode] #app .opportunity-outcome-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px;padding-bottom:4px}
+body[data-mode] #app .opportunity-outcome-chips button{display:inline-flex;gap:8px;align-items:center;min-height:40px;font-size:14px;padding:9px 12px;white-space:nowrap;background:#fff;color:#29455f;border:1px solid #cdd9e7;border-radius:8px}
+body[data-mode] #app .opportunity-outcome-chips button.active{background:#194f78;color:#fff;border-color:#194f78}
+body[data-mode] #app .opportunity-outcome-chips button:hover{background:#edf3fa;color:#173e65}
+body[data-mode] #app .opportunity-outcome-chips button.active:hover{background:#123d60;color:#fff}
+body[data-mode] #app .opportunity-outcome-chips b{font-size:12px;padding:2px 5px;border-radius:4px;background:#edf2f8;color:#29455f}
+body[data-mode] #app .opportunity-outcome-chips button.active b{background:#fff;color:#194f78}
+body[data-mode] #app .opportunity-outcome-note{font-size:13px;line-height:1.6;color:#536780;margin:0 0 16px}
+body[data-mode] #app :is(.lead-pipeline-board,.opportunity-pipeline>.board){display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(280px,300px);gap:14px;align-items:start;width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow:auto;max-height:max(360px,70dvh);padding:2px 2px 16px;scroll-snap-type:x proximity;overscroll-behavior-x:contain;touch-action:pan-x pan-y pinch-zoom;scrollbar-width:auto;scrollbar-color:#6685a3 #e5edf5}
+body[data-mode] #app :is(.lead-pipeline-column,.opportunity-pipeline .column){display:block;width:auto;max-width:none;min-width:0;min-height:220px;margin:0;padding:0;border:1px solid #d7e2ed;border-radius:12px;background:#edf2f7;scroll-snap-align:start;box-sizing:border-box;overflow:hidden}
+body[data-mode] #app :is(.lead-pipeline-column>header,.opportunity-pipeline .columnhead){position:static;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;height:auto;min-height:70px;padding:16px;margin:0;border:0;border-bottom:1px solid #d8e1eb;background:transparent;color:#1b3652}
+body[data-mode] #app :is(.lead-pipeline-column h2,.opportunity-pipeline .columnhead>b){font-size:15px;font-weight:600;line-height:1.4;margin:0;flex:1;min-width:0}
+body[data-mode] #app :is(.lead-pipeline-column>header>b,.opportunity-pipeline .columnhead>span){background:#fff;color:#1b4e74;font-size:13px;border-radius:6px;padding:4px 8px;flex:none}
+body[data-mode] #app .lead-pipeline-cards{display:grid;gap:12px;padding:12px}
+body[data-mode] #app .lead-pipeline-card{margin:0;border:1px solid #d6e1ed;border-radius:10px;background:white}
+body[data-mode] #app .opportunity-pipeline .column>article.record{margin:12px;padding:16px;border:1px solid #d6e1ed;border-radius:10px;background:white;box-shadow:none}
+body[data-mode] #app .opportunity-pipeline .stagetotal{font-size:16px;line-height:1.4;font-weight:600;color:#174b79;margin:0;padding:12px 16px 0}
+body[data-mode] #app .lead-pipeline-guide{margin:12px 0;font-size:13px;line-height:1.6;color:#536780}
+body[data-mode] #app .lead-pipeline-mobile-stage{display:none}
+body[data-mode] #app .lead-pipeline-board::-webkit-scrollbar{height:12px;width:12px}
+body[data-mode] #app .lead-pipeline-board::-webkit-scrollbar-track{background:#e5edf5;border-radius:8px}
+body[data-mode] #app .lead-pipeline-board::-webkit-scrollbar-thumb{background:#6685a3;border:2px solid #e5edf5;border-radius:8px}
+body[data-mode] #app .lead-pipeline-board:focus-visible{outline:3px solid #7ca5c8;outline-offset:3px}
+body[data-mode=mobile] #app .crm-view-switch button:not(:disabled),body[data-mode=mobile] #app .opportunity-outcome-chips button{min-height:44px}
+body[data-mode=mobile] #app .opportunity-outcome-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+body[data-mode=mobile] #app .opportunity-outcome-chips button{flex:0 0 auto}
+body[data-mode=mobile] #app :is(.lead-pipeline-board,.opportunity-pipeline>.board){grid-auto-columns:minmax(250px,85%);gap:12px;max-height:max(320px,68dvh)}
+@media(max-width:600px){body[data-mode] #app :is(.lead-pipeline-board,.opportunity-pipeline>.board){grid-auto-columns:minmax(250px,85%);max-height:max(320px,68dvh)}}
