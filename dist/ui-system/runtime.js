@@ -21775,6 +21775,9 @@ function Rm({ native: e }) {
 			"aria-describedby": e.getAttribute("aria-describedby") || void 0,
 			children: /* @__PURE__ */ (0, G.jsx)(fm, {})
 		}), /* @__PURE__ */ (0, G.jsx)(mm, {
+			onCloseAutoFocus: (e) => {
+				e.preventDefault(), r.current?.focus({ preventScroll: !0 });
+			},
 			position: "popper",
 			sideOffset: 6,
 			className: "crm-select-content",
@@ -21854,7 +21857,7 @@ function Jm() {
 			},
 			onInteractOutside: (e) => e.preventDefault(),
 			onCloseAutoFocus: (e) => {
-				e.preventDefault(), Km?.isConnected && Km.focus();
+				e.preventDefault(), Km?.isConnected && Km.focus({ preventScroll: !0 });
 			},
 			children: [
 				/* @__PURE__ */ (0, G.jsx)(lm, {
@@ -21893,9 +21896,13 @@ function Ym() {
 }
 function Xm() {
 	Fm = !1;
-	for (let [e, t] of jm) (!e.isConnected || !t.host.isConnected) && (t.root.unmount(), e.focus = t.focus, jm.delete(e));
+	for (let [e, t] of jm) (!e.isConnected || !t.host.isConnected || e.closest("#form")) && (t.root.unmount(), t.host.remove(), e.focus = t.focus, e.classList.remove("crm-native-select"), e.removeAttribute("aria-hidden"), e.removeAttribute("tabindex"), jm.delete(e));
 	for (let [e, t] of Mm) (!e.isConnected || !t.host.isConnected) && (t.root.unmount(), Mm.delete(e));
 	for (let e of document.querySelectorAll("#app select,#form select")) {
+		if (e.closest("#form")) {
+			e.classList.add("crm-field", "crm-form-select");
+			continue;
+		}
 		if (e.multiple || e.size > 1 || e.closest("[data-ui-island]")) continue;
 		let t = jm.get(e);
 		if (!t) {
@@ -21958,7 +21965,7 @@ window.BPDDesignRuntime = {
 	badgeMarkup: km,
 	fieldMarkup: Am,
 	refresh: Zm,
-	version: "20261124-shadcn-1"
+	version: "20261125-modal-select-2"
 }, Ym(), new MutationObserver((e) => {
 	e.some((e) => !(e.target instanceof Element) || !e.target.closest("[data-ui-island],[data-ui-portal]")) && Zm();
 }).observe(document.body, {
