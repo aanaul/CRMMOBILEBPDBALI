@@ -1,0 +1,7 @@
+/* Action columns must fit their controls, never split a short label into letters. */
+body[data-mode] #app table:has(tbody>tr>td:last-child :is(button,a.button)){table-layout:auto}
+body[data-mode] #app table:has(tbody>tr>td:last-child :is(button,a.button)) :is(th,td):last-child{width:112px;min-width:112px;padding-inline:12px;vertical-align:middle}
+body[data-mode] #app table:has(tbody>tr>td:last-child :is(button,a.button)) td:last-child{white-space:nowrap;word-break:normal;overflow-wrap:normal;overflow:visible}
+body[data-mode] #app table td:last-child :is(button,a.button){display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:auto;min-width:max-content;max-width:none;height:auto;min-height:40px;padding:8px 12px;line-height:1.4;white-space:nowrap;word-break:normal;overflow-wrap:normal;text-overflow:clip;overflow:visible;box-sizing:border-box}
+body[data-mode] #app table td:last-child :is(button,a.button)>:is(span,small){white-space:nowrap;word-break:normal;overflow-wrap:normal}
+body[data-mode] #app .scrolltable{overflow-x:auto;overscroll-behavior-x:contain}
