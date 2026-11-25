@@ -9,10 +9,10 @@ function workflowTaskParty(t){
  if(p?.relation==='Customer')return {label:'Customer 360',route:'Nasabah detail',id:p.id,accessible:mine(p)&&!p.readOnly};
  const l=db.leads.find(l=>l.profile===t.profile&&mine(l));return l?{label:'Buka Lead',route:'Lead detail',id:l.id,accessible:true}:null;
 }
-function workflowRevealOutcome(){const board=document.querySelector('.opportunity-pipeline>.board'),column=board?.querySelector('[data-outcome="'+listStatus+'"]');if(board&&column)board.scrollTo({left:board.scrollLeft+column.getBoundingClientRect().left-board.getBoundingClientRect().left-2,behavior:'instant'})}
+function workflowRevealOutcome(){const board=document.querySelector('.opportunity-pipeline>.board'),column=stageFilter?[...(board?.querySelectorAll('[data-stage]')||[])].find(c=>c.getAttribute('data-stage')===stageFilter):board?.querySelector('[data-outcome="'+listStatus+'"]');if(board&&column)board.scrollTo({left:board.scrollLeft+column.getBoundingClientRect().left-board.getBoundingClientRect().left-2,behavior:'instant'})}
 function workflowDecorate(){
  const app=document.querySelector('#app');if(!app)return;
- if(view==='Peluang'){const select=app.querySelector('select[aria-label="Tahap peluang"]');if(select){const first=select.querySelector('option[value=""]');if(first)first.textContent='Semua tahap';select.setAttribute('onchange','workflowStageFilter(this.value)')}if(listKind==='Pipeline'&&['Won','Lost','Cancelled'].includes(listStatus))requestAnimationFrame(workflowRevealOutcome)}
+ if(view==='Peluang'){const select=app.querySelector('select[aria-label="Tahap peluang"]');if(select){const first=select.querySelector('option[value=""]');if(first)first.textContent='Semua tahap';select.setAttribute('onchange','workflowStageFilter(this.value)')}if(listKind==='Pipeline'&&(stageFilter||['Won','Lost','Cancelled'].includes(listStatus)))requestAnimationFrame(workflowRevealOutcome)}
  if(view==='Aktivitas detail'){
   const t=task(focus);if(t&&mine(t)){const party=workflowTaskParty(t);app.querySelectorAll('button[onclick]').forEach(button=>{if(!/go\(['"]Nasabah detail['"]/.test(button.getAttribute('onclick')||''))return;if(!party){button.hidden=true;return}button.textContent=party.accessible?party.label:'Relasi di luar akses';button.disabled=!party.accessible;if(party.accessible)button.setAttribute('onclick','go('+JSON.stringify(party.route)+','+JSON.stringify(party.id)+')')});}
  }

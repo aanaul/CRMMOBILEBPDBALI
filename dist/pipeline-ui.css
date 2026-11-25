@@ -29,7 +29,7 @@ body[data-mode] #app .lead-pipeline-board::-webkit-scrollbar-track{background:#e
 body[data-mode] #app .lead-pipeline-board::-webkit-scrollbar-thumb{background:#6685a3;border:2px solid #e5edf5;border-radius:8px}
 body[data-mode] #app .lead-pipeline-board:focus-visible{outline:3px solid #7ca5c8;outline-offset:3px}
 body[data-mode=mobile] #app .crm-view-switch button:not(:disabled),body[data-mode=mobile] #app .opportunity-outcome-chips button{min-height:44px}
-body[data-mode=mobile] #app .opportunity-outcome-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+body[data-mode=mobile] #app .opportunity-outcome-chips{flex-wrap:wrap;overflow:visible;gap:6px}
 body[data-mode=mobile] #app .opportunity-outcome-chips button{flex:0 0 auto}
 body[data-mode=mobile] #app :is(.lead-pipeline-board,.opportunity-pipeline>.board){grid-auto-columns:minmax(250px,85%);gap:12px;max-height:max(320px,68dvh)}
 @media(max-width:600px){body[data-mode] #app :is(.lead-pipeline-board,.opportunity-pipeline>.board){grid-auto-columns:minmax(250px,85%);max-height:max(320px,68dvh)}}
