@@ -9,7 +9,7 @@ function compactListDecorate(){
  const intro=app.querySelector(':scope>.intro'),tools=app.querySelector('.scaletools');if(!intro||!tools||tools.dataset.compactReady)return;
  app.classList.add('compact-list');tools.dataset.compactReady='true';const key=compactListKey();
  const headingActions=intro.querySelector('.actions')||intro.appendChild(document.createElement('div'));headingActions.classList.add('actions','compact-heading-actions');
- const switcher=app.querySelector(':scope>.crm-view-switch');if(switcher)headingActions.prepend(switcher);
+ const switcher=app.querySelector(':scope>.crm-view-switch');if(switcher){switcher.classList.add('compact-view-switch');}
  let guide=app.querySelector(':scope>.workflow-guide,:scope>.bank-stage-overview');
  if(!guide){guide=document.createElement('details');guide.innerHTML='<summary>Panduan</summary>';}
  guide.classList.add('compact-guide');guide.classList.remove('panel');const summary=guide.querySelector(':scope>summary');if(summary){summary.setAttribute('aria-label',summary.textContent.trim());summary.title=summary.textContent.trim();summary.textContent='Panduan';}
@@ -17,10 +17,11 @@ function compactListDecorate(){
  app.querySelectorAll(':scope>.opportunity-outcome-note,:scope>.lead-pipeline-guide').forEach(el=>help.append(el));
  const scrollTools=app.querySelector('.pipeline-scroll-tools'),listhead=app.querySelector(':scope>.listhead');
  if(scrollTools&&listhead){const text=scrollTools.querySelector('p');if(text)help.append(text);const buttons=scrollTools.querySelector('div');if(buttons){buttons.classList.add('compact-scroll-actions');listhead.append(buttons)}scrollTools.remove();}
+ if(view==='Leads'&&!help.children.length){const text=document.createElement('p');text.textContent='Pipeline untuk melihat tahap Lead. Daftar untuk membandingkan data. Pencarian dan filter tetap berlaku di kedua tampilan.';help.append(text)}
  if(help.children.length)headingActions.append(guide);
  const chips=[...app.querySelectorAll(':scope>.rangechips')];if(chips.length){const statuses=document.createElement('section');statuses.className='compact-statusbar';statuses.setAttribute('aria-label','Filter status dan tahap');intro.after(statuses);chips.forEach(el=>statuses.append(el));}
  const search=tools.querySelector('.searchbox'),line=tools.querySelector('.filterline'),date=app.querySelector('.date-filter-bar');
- const toolbar=document.createElement('div');toolbar.className='compact-toolbar';if(search)toolbar.append(search);
+ const toolbar=document.createElement('div');toolbar.className='compact-toolbar';if(switcher)toolbar.append(switcher);if(search)toolbar.append(search);
  if(typeof dateFilterState==='function'){
   const state=dateFilterState(view),bounds=dateFilterBounds(state),period=document.createElement('label');period.className='compact-period';period.innerHTML='<span class="compact-sr-only">Periode</span><select aria-label="Periode daftar" onchange="compactPeriodChanged(this.value)">'+[['all','Semua tanggal'],['week','Minggu ini'],['month','Bulan ini'],['custom',bounds&&state.preset==='custom'?bounds.start+' – '+bounds.end:'Kustom…']].map(([value,label])=>'<option value="'+value+'" '+(state.preset===value?'selected':'')+'>'+E(label)+'</option>').join('')+'</select>';period.title=date?.querySelector('.date-filter-heading small')?.textContent||'Tanggal mengikuti konteks daftar · WITA';toolbar.append(period);
  }
