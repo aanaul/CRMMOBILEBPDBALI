@@ -121,7 +121,7 @@ const memberJourneyContentBefore=renderContent;
 renderContent=function(){
  memberJourneyContentBefore();
  if(view==='Member'&&authUser?.role==='Superadmin')document.querySelectorAll('#app tbody tr').forEach((row,i)=>{
-  const m=memberList[i];if(!m)return;row.dataset.fieldMember=m.id;row.tabIndex=0;row.classList.add('clickablerow');
+  if(row.classList.contains('member-directory-empty'))return;const m=row.dataset.memberId?memberList.find(m=>m.id===row.dataset.memberId):memberList[i];if(!m)return;row.dataset.fieldMember=m.id;row.tabIndex=0;row.classList.add('clickablerow');
   const button=document.createElement('button');button.textContent='Lihat Journey';button.onclick=e=>{e.stopPropagation();openAttendanceJourney(m.id,fieldDay)};const cell=row.lastElementChild;if(cell){const actions=document.createElement('div');actions.className='memberrowactions';while(cell.firstChild)actions.append(cell.firstChild);actions.append(button);cell.append(actions)}
   row.onclick=e=>{if(!e.target.closest('button,a,input,select,textarea'))openAttendanceJourney(m.id,fieldDay)};
   row.onkeydown=e=>{if(e.target===row&&['Enter',' '].includes(e.key)){e.preventDefault();openAttendanceJourney(m.id,fieldDay)}};
