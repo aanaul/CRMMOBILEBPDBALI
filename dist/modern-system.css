@@ -320,3 +320,12 @@ body[data-mode=mobile] #app.compact-list .compact-advanced>summary{font-size:0;g
 body[data-mode=mobile] #app.compact-list .compact-advanced>summary::before{content:'Filter';font-size:12px}
 body[data-mode=mobile] #app.compact-list .compact-advanced>summary::after{content:'+';font-size:12px}
 body[data-mode=mobile] #app.compact-list .compact-advanced[open]>summary::after{content:'−'}
+
+/* Qualification temperature: labels stay visible alongside contextual colour. */
+body[data-mode] #app .lead-card-grade[data-grade^="Cool" i],body[data-mode] #app .lead-card-grade[data-grade^="Cold" i]{background:#e8f4ff;border-color:#b7d9f6;color:#175b98}
+body[data-mode] #app .lead-card-grade[data-grade^="Warm" i]{background:#fff4d6;border-color:#edd28b;color:#815508}
+body[data-mode] #app .lead-card-grade[data-grade^="Hot" i]{background:#fff0e8;border-color:#f1b99d;color:#a13c13}
+
+body[data-mode] #app .tag[data-grade^="Cool" i],body[data-mode] #app .tag[data-grade^="Cold" i]{background:#e8f4ff;border:1px solid #b7d9f6;color:#175b98}
+body[data-mode] #app .tag[data-grade^="Warm" i]{background:#fff4d6;border:1px solid #edd28b;color:#815508}
+body[data-mode] #app .tag[data-grade^="Hot" i]{background:#fff0e8;border:1px solid #f1b99d;color:#a13c13}
