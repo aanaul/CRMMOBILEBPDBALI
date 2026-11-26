@@ -80,3 +80,22 @@ body[data-mode=mobile] #nav.mobileBottomTabs button{min-height:62px;gap:3px;padd
 body[data-mode=mobile] #app .compact-scroll-actions button{min-height:44px;font-size:14px}
 
 .mx-home-heading>div{min-width:0;flex:1}.mx-home-heading h1{overflow-wrap:anywhere}.mx-home-heading>button{flex-shrink:0}.mx-profile{display:grid;gap:14px;min-width:0}.mx-profile h1{overflow-wrap:anywhere}.mx-profile .profileinfo{align-items:start;gap:14px}.mx-profile .profileinfo strong{overflow-wrap:anywhere}.mx-profile .profileactions .mx-logout{color:#a3322e}
+
+body[data-mode=mobile] #app .mx-profile{width:100%;max-width:720px;margin:0 auto;gap:16px}
+body[data-mode=mobile] #app .mx-profile-hero{display:flex;align-items:center;gap:16px;padding:20px;background:#10243c;border-radius:14px;color:#fff;text-align:left}
+body[data-mode=mobile] #app .mx-profile-avatar{display:grid;place-items:center;flex:0 0 56px;width:56px;height:56px;border-radius:50%;background:#e6f1e8;color:#2c6b56;font-size:19px;font-weight:700}
+body[data-mode=mobile] #app .mx-profile-hero>div{min-width:0;display:grid;gap:5px}
+body[data-mode=mobile] #app .mx-profile-hero h1{font-size:21px;line-height:1.35;margin:0;color:#fff;text-align:left}
+body[data-mode=mobile] #app .mx-profile-hero p{font-size:14px;margin:0;color:#e1eaf4}
+body[data-mode=mobile] #app .mx-profile-hero small{font-size:12px;line-height:1.5;color:#c8d7e8;overflow-wrap:anywhere}
+body[data-mode=mobile] #app .mx-profile-info{padding:18px}
+body[data-mode=mobile] #app .mx-profile-info h2{font-size:17px;line-height:1.4;margin:0 0 8px}
+body[data-mode=mobile] #app .mx-profile-facts{display:grid;margin:0}
+body[data-mode=mobile] #app .mx-profile-row{display:grid;grid-template-columns:minmax(0,1fr);gap:5px;padding:13px 0;border-bottom:1px solid #e4ebf2;min-width:0}
+body[data-mode=mobile] #app .mx-profile-row:last-child{border:0;padding-bottom:0}
+body[data-mode=mobile] #app .mx-profile-row dt{font-size:13px;line-height:1.5;color:#60748a;margin:0}
+body[data-mode=mobile] #app .mx-profile-row dd{font-size:15px;line-height:1.5;font-weight:600;color:#182b45;margin:0;min-width:0;overflow-wrap:anywhere}
+body[data-mode=mobile] #app .mx-profile-actions{display:grid;gap:0;background:#fff;border:1px solid #dce4ee;border-radius:12px;padding:0 16px;overflow:hidden}
+body[data-mode=mobile] #app .mx-profile-actions>button{display:block;width:100%;min-height:52px;height:auto;padding:14px 0;border:0;border-bottom:1px solid #e4ebf2;border-radius:0;background:#fff;text-align:left;font-size:15px;color:#194f78}
+body[data-mode=mobile] #app .mx-profile-actions>button:last-child{border:0;color:#aa332e}
+@media(min-width:600px){body[data-mode=mobile] #app .mx-profile-row{grid-template-columns:160px minmax(0,1fr);gap:20px}}

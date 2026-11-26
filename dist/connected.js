@@ -91,7 +91,7 @@ render=function(){
  let nav=document.querySelector('#nav');if(!nav.querySelector('[data-member]')){let b=document.createElement('button');b.dataset.member='1';b.textContent='Member';b.className=view==='Member'?'active':'';b.onclick=()=>go('Member');let settings=[...nav.children].find(b=>b.textContent==='Pengaturan');nav.insertBefore(b,settings||null)}
  }
  if(mobile&&view==='Home'&&authUser.role==='Superadmin'&&activeBranch===BPD_BRANCH_NAMES[0]){let grid=document.querySelector('.homemenus');if(grid&&!grid.querySelector('[data-member]')){let b=document.createElement('button');b.dataset.member='1';b.innerHTML=mobileIcon('users')+'<strong>Member</strong><small>Kelola akun dan role</small>';b.onclick=()=>go('Member');grid.append(b)}}
- if(mobile&&view==='Profil User'){let actions=document.querySelector('.profileactions');if(actions&&!actions.querySelector('[data-logout]')){actions.insertAdjacentHTML('beforeend','<button data-logout onclick="changeOwnPassword()">Ubah password <span>›</span></button><button onclick="logoutConnected()">Keluar <span>›</span></button>')}}
+ // Mobile profile actions are rendered once by mxProfileScreen.
  if(!journey){document.querySelector('#role').innerHTML='<option>'+E(authUser.name)+'</option>';document.querySelector('#user').innerHTML='<strong>'+E(authUser.name)+'</strong><small>'+E(authUser.role)+'</small>'}
  wireTableRows();cleanConnectedLabels();
 };
