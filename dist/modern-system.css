@@ -193,3 +193,34 @@ body[data-mode=cms]>aside #nav button:is(.active,[aria-current=page]){color:#006
 body[data-mode=cms]>aside #nav button:is(.active,[aria-current=page]) .ui-icon{color:#0875d1!important}
 body[data-mode=cms]>aside footer,body[data-mode=cms]>aside footer strong{color:#425b79!important}
 body[data-mode=cms]>aside #sidebarScrollHint{background:#f0f7ff!important;color:#425b79!important;border-color:#dfe7f2!important}
+
+/* Contextual Kanban, shared by Leads / Opportunity and both screen modes. */
+body[data-mode] #app :is(.lead-pipeline-column,.opportunity-pipeline .column){--stage-color:#665181;--stage-tint:#f0edf7;display:flex;flex-direction:column;height:570px;max-height:68dvh;min-height:320px;border:0!important;background:var(--stage-tint);border-radius:12px;overflow:hidden}
+body[data-mode] #app .lead-pipeline-column[data-stage="1"],body[data-mode] #app .opportunity-pipeline .column:nth-child(2){--stage-color:#285f99;--stage-tint:#eaf3fc}
+body[data-mode] #app .lead-pipeline-column[data-stage="2"],body[data-mode] #app .opportunity-pipeline .column:nth-child(3){--stage-color:#087b78;--stage-tint:#e9f6f4}
+body[data-mode] #app .lead-pipeline-column[data-stage="3"]{--stage-color:#ad3f4c;--stage-tint:#fceef0}
+body[data-mode] #app .lead-pipeline-column[data-stage="4"],body[data-mode] #app .opportunity-pipeline .column:nth-child(4){--stage-color:#0967ab;--stage-tint:#eaf4fc}
+body[data-mode] #app .lead-pipeline-column[data-stage="5"]{--stage-color:#237348;--stage-tint:#eaf6ee}
+body[data-mode] #app .opportunity-pipeline .column:nth-child(5){--stage-color:#93610a;--stage-tint:#fcf5e5}
+body[data-mode] #app .lead-pipeline-column[data-stage="6"],body[data-mode] #app .opportunity-pipeline .column[data-outcome="Cancelled"]{--stage-color:#58667a;--stage-tint:#edf1f6}
+body[data-mode] #app .opportunity-pipeline .column[data-outcome="Won"]{--stage-color:#237348;--stage-tint:#eaf6ee}
+body[data-mode] #app .opportunity-pipeline .column[data-outcome="Lost"]{--stage-color:#ad3f4c;--stage-tint:#fceef0}
+body[data-mode] #app :is(.lead-pipeline-column>header,.kanban-stage-header){background:var(--stage-color)!important;color:#fff!important;border:0!important;border-radius:10px;padding:14px;margin:0 0 10px;flex-shrink:0;min-height:88px;box-shadow:none}
+body[data-mode] #app .lead-pipeline-column>header{display:flex;align-items:flex-start;gap:12px}
+body[data-mode] #app .lead-pipeline-column>header h2{color:#fff!important;font-size:15px;font-weight:600;line-height:1.5;flex:1;margin:0}
+body[data-mode] #app .kanban-stage-header .columnhead{background:transparent!important;color:#fff!important;border:0;min-height:0;padding:0;display:flex;align-items:flex-start;gap:12px}
+body[data-mode] #app .kanban-stage-header .columnhead>b{color:#fff!important;font-size:15px;line-height:1.5;font-weight:600}
+body[data-mode] #app :is(.lead-pipeline-column>header>b,.kanban-stage-header .columnhead>span){background:#ffffff30!important;color:#fff!important;border:1px solid #ffffff35;border-radius:5px;padding:2px 7px;font-size:13px;line-height:1.5;flex-shrink:0}
+body[data-mode] #app .kanban-stage-header .stagetotal{display:grid;gap:3px;margin-top:12px;padding:10px 12px;border:1px solid #ffffff60;border-radius:8px;background:#ffffff20;color:#fff!important}
+body[data-mode] #app .kanban-stage-header .stagetotal small{color:#fff!important;font-size:12px;font-weight:500}
+body[data-mode] #app .kanban-stage-header .stagetotal strong{color:#fff!important;font-size:18px;line-height:1.4;font-weight:650}
+body[data-mode] #app :is(.lead-pipeline-cards,.kanban-stage-cards){display:flex;flex-direction:column;gap:12px;padding:0 10px 12px;overflow-y:auto;overflow-x:hidden;min-height:0;flex:1;scrollbar-width:thin;scrollbar-color:var(--stage-color) transparent;overscroll-behavior-y:contain}
+body[data-mode] #app :is(.lead-pipeline-card,.kanban-stage-cards>article.record){flex-shrink:0;margin:0!important;padding:0;background:#fff!important;border:1px solid #dfe7f2;border-radius:10px;box-shadow:none}
+body[data-mode] #app .kanban-stage-cards>article.record{padding:16px}
+body[data-mode] #app :is(.lead-pipeline-card,.kanban-stage-cards>article.record):hover{border-color:var(--stage-color);box-shadow:0 3px 10px #1b304e0c}
+body[data-mode] #app .lead-pipeline-open{padding:14px;gap:8px;background:#fff;color:#1b304e}
+body[data-mode] #app .lead-pipeline-open strong{font-size:15px;line-height:1.5}
+body[data-mode] #app .lead-pipeline-actions{padding:0 12px 12px}
+body[data-mode] #app :is(.pipeline-column-empty,.lead-pipeline-empty){background:#fff;border-radius:10px;padding:28px 16px;margin:0;text-align:center;color:#596e8b;font-size:14px;line-height:1.6}
+body[data-mode] #app :is(.lead-pipeline-board,.opportunity-pipeline>.board){align-items:stretch;max-height:none;padding-bottom:14px}
+body[data-mode=mobile] #app :is(.lead-pipeline-column,.opportunity-pipeline .column){height:540px;max-height:66dvh;min-height:340px}
