@@ -269,3 +269,28 @@ body[data-mode=mobile] #app .mx-home-heading p{text-align:left;margin:0;color:#5
 body[data-mode=mobile] #app.compact-list>.intro{flex-direction:row!important}
 body[data-mode=mobile] main>header .user,body[data-mode=mobile] main>header .mobile-header-options{grid-row:1}
 body[data-mode=mobile] main>header #syncState{grid-column:2 / 4;grid-row:2;text-align:right!important;justify-self:end;white-space:nowrap;font-size:10px!important}
+
+/* Lead cards: identity, need, product and accountable AO form distinct reading groups. */
+body[data-mode] #app .lead-pipeline-column>.lead-pipeline-cards{padding-top:12px!important}
+body[data-mode] #app .lead-pipeline-column>header{margin-bottom:0!important}
+body[data-mode] #app .lead-pipeline-open{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:16px;text-align:left;line-height:1.5;white-space:normal}
+body[data-mode] #app .lead-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+body[data-mode] #app .lead-card-id{font-size:12px;color:#596e8b;line-height:1.5}
+body[data-mode] #app .lead-card-grade{font-size:12px;font-weight:600;color:#425b79;background:#eff4f9;border:1px solid #dfe7f2;border-radius:20px;padding:2px 8px;white-space:nowrap}
+body[data-mode] #app .lead-pipeline-open .lead-card-name{font-size:16px;font-weight:650;color:#1b304e;line-height:1.5;overflow-wrap:break-word;margin:0}
+body[data-mode] #app .lead-card-field{display:grid;gap:4px;min-width:0;font-size:14px;color:#29415f;line-height:1.55}
+body[data-mode] #app .lead-card-field>small,body[data-mode] #app .lead-card-owner small{font-size:12px;font-weight:400;line-height:1.5;color:#596e8b}
+body[data-mode] #app .lead-card-product{background:#f5f9fd;border:1px solid #e4edf6;border-radius:8px;padding:10px 12px}
+body[data-mode] #app .lead-card-product .lead-pipeline-product{font-size:14px;line-height:1.55;font-weight:600;color:#245f8c}
+body[data-mode] #app .lead-card-owner{display:flex;align-items:center;gap:9px;padding-top:12px;border-top:1px solid #e5ecf4}
+body[data-mode] #app .lead-card-owner>span:last-child{display:grid;gap:2px;font-size:13px;line-height:1.5;color:#29415f}
+body[data-mode] #app .lead-card-owner-icon{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;background:#e8f4ff;color:#0069bf;border-radius:50%;font-size:12px;font-weight:600}
+body[data-mode] #app .lead-card-sla{display:block;min-width:0}
+body[data-mode] #app .lead-card-sla>.lead-sla{display:block;width:100%;padding:8px 10px;border-radius:7px;font-size:12px;line-height:1.6;background:#edf6ff;color:#285d8b;white-space:normal;overflow-wrap:break-word}
+body[data-mode] #app .lead-card-sla>.lead-sla.late{background:#fff0f0;color:#a42d38}
+body[data-mode] #app .lead-pipeline-actions{border-top:1px solid #edf1f6;padding:12px;display:flex;gap:8px;flex-wrap:wrap}
+body[data-mode] #app .lead-pipeline-actions button{font-size:13px;flex:1;white-space:nowrap;min-width:max-content}
+body[data-mode] #app :is(.rd-metric,.rd-metric-value,.rd-progress-value,.dash-kpi,.ex-kpi,.c360-metric) strong{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+body[data-mode=mobile] #app :is(.rd-metric,.rd-metric-value,.rd-progress-value,.dash-kpi,.ex-kpi,.c360-metric) strong{font-size:clamp(18px,5.3vw,24px);line-height:1.4}
+
+@media(max-width:600px){body[data-mode] #app .rd-targets{grid-template-columns:minmax(0,1fr)}body[data-mode] #app .rd-metric.rd-money{grid-column:1 / -1}body[data-mode] #app .rd-targets strong{font-size:22px;line-height:1.4;overflow-wrap:break-word;font-variant-numeric:tabular-nums}}

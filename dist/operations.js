@@ -67,7 +67,7 @@ function dashboardModel(){
 }
 function dashboardFilter(key,value){if(key==='owner')dashboardOwner=value;if(key==='range')dashboardRange=value;if(key==='priority')dashboardPriority=value;renderContent()}
 function dashboardAction(label,action,extra=''){return '<button class="dash-link '+extra+'" onclick="'+E(action)+'">'+label+'<span aria-hidden="true">↗</span></button>'}
-function dashboardCompactMoney(value){const n=Number(value)||0;const unit=n>=1e12?[1e12,'triliun']:n>=1e9?[1e9,'miliar']:n>=1e6?[1e6,'juta']:null;return unit?'Rp '+new Intl.NumberFormat('id-ID',{maximumFractionDigits:2}).format(n/unit[0])+' '+unit[1]:rup(n)}
+function dashboardCompactMoney(value){return rup(Number(value)||0)}
 function dashboardMetric(label,value,sub,kind,tone=''){return '<button class="dash-kpi '+tone+'" onclick="dashboardOpen('+E(JSON.stringify(kind))+')"><span>'+E(label)+'</span><strong>'+E(value)+'</strong><small>'+E(sub)+' <span aria-hidden="true">↗</span></small></button>'}
 function dashboardRow(x,kind){const isTask=kind==='task',lead=kind==='lead',customer=kind==='customer';const title=isTask?x.purpose:lead?pname(x.profile):customer?x.name:x.name;const route=isTask?'Aktivitas detail':lead?'Lead detail':customer?'Nasabah detail':'Opportunity detail';const label=customer?(x.customerStatus||'Aktif'):isTask?(overdue(x)?'Overdue':x.status):lead?leadLifecycle(x):x.stage;
  return dashboardAction('<span><b>'+E(title)+'</b><small>'+E(x.owner||'AO belum ditentukan')+' · '+E(isTask?fmt(x.due):customer?'Customer 360':lead?x.source:rup(x.value))+'</small></span><em>'+E(label)+'</em>','dashboardNavigate('+JSON.stringify(route)+','+JSON.stringify(x.id)+')');
