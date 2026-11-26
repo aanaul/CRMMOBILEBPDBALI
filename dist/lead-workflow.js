@@ -1,7 +1,7 @@
 /* Module 1: manual lead acquisition, qualification, referral and SLA. No AI. */
 const LEAD_GUIDANCE={Cool:'Kebutuhan belum terkonfirmasi; lakukan kontak awal.',Warm:'Kebutuhan terkonfirmasi, informasi atau waktu pembelian belum lengkap.','Hot 1':'Kebutuhan dan produk sesuai; lengkapi data serta rencana tindak lanjut.','Hot 2':'Kebutuhan, kelengkapan awal dan target waktu sudah jelas; siap ditawarkan.'};
 function leadCall(name,...args){return name+'('+args.map(x=>E(JSON.stringify(x))).join(',')+')'}
-function leadPolicy(){return {responseDays:1,qualificationDays:5,branches:['BPD Bali HQ Renon','BPD Bali Capem Nusa Dua'],...db.config.leadWorkflow,guidance:{...LEAD_GUIDANCE,...db.config.leadWorkflow?.guidance}}}
+function leadPolicy(){return {responseDays:1,qualificationDays:5,branches:typeof BPD_BRANCH_NAMES!=='undefined'?BPD_BRANCH_NAMES:['BPD BALI HQ Renon','BPD BALI KCU DENPASAR','BPD BALI CAPEM NUSA DUA'],...db.config.leadWorkflow,guidance:{...LEAD_GUIDANCE,...db.config.leadWorkflow?.guidance}}}
 function leadOpportunityCount(l){return db.leadOpportunityCounts?.[l.id]??db.opps.filter(o=>o.lead===l.id).length}
 function linkedLeadHasOpportunity(l){return l.status==='Converted'||(!l.queueReturnAt&&leadOpportunityCount(l)>0)||db.opps.some(o=>o.lead===l.id&&o.outcome==='Aktif')}
 function leadOpportunities(l){return db.opps.filter(o=>o.lead===l.id&&mine(o))}
