@@ -6,9 +6,23 @@ function customerActiveOpportunities(id){return db.opps.filter(o=>o.profile===id
 function customerOpportunityMatches(p,filter=customerOpportunityChip){const n=customerActiveOpportunities(p.id).length;return filter==='Semua'||(filter==='Punya Opportunity Aktif'?n>0:n===0)}
 const flowPreviousList=getList;
 getList=function(name=view){const rows=flowPreviousList(name);return name==='Nasabah'?rows.filter(p=>customerOpportunityMatches(p)):rows};
-function setCustomerOpportunityChip(value){customerOpportunityChip=value;listPage=1;renderContent()}
+function setCustomerFilter(value){
+ if(!['Semua','Aktif','Inactive','Punya Opportunity Aktif','Tanpa Opportunity Aktif'].includes(value))return;
+ customerStatusChip=['Aktif','Inactive'].includes(value)?value:'Semua';
+ customerOpportunityChip=['Punya Opportunity Aktif','Tanpa Opportunity Aktif'].includes(value)?value:'Semua';
+ listPage=1;renderContent();if(typeof persistWorkspaceLocation==='function')persistWorkspaceLocation();
+}
+function setCustomerOpportunityChip(value){setCustomerFilter(value)}
 const flowPreviousScale=scaleList;
-scaleList=function(){let html=flowPreviousScale();if(view!=='Nasabah')return html;const all=db.profiles.filter(p=>p.relation==='Customer'&&mine(p)&&(typeof dateRecordMatches!=='function'||dateRecordMatches('Nasabah',p))&&(customerStatusChip==='Semua'||statusOfCustomer(p)===customerStatusChip));const chips='<div class="rangechips customerchips" aria-label="Opportunity aktif Customer">'+['Semua','Punya Opportunity Aktif','Tanpa Opportunity Aktif'].map(s=>'<button class="'+(s===customerOpportunityChip?'active':'')+'" aria-pressed="'+(s===customerOpportunityChip)+'" onclick="'+leadCall('setCustomerOpportunityChip',s)+'">'+E(s)+' <b>'+all.filter(p=>customerOpportunityMatches(p,s)).length+'</b></button>').join('')+'</div>';return html.replace('<div class="scaletools">',chips+'<div class="scaletools">')};
+scaleList=function(){let html=flowPreviousScale();if(view!=='Nasabah')return html;
+ const all=db.profiles.filter(p=>p.relation==='Customer'&&mine(p)&&(typeof dateRecordMatches!=='function'||dateRecordMatches('Nasabah',p))),selected=customerOpportunityChip!=='Semua'?customerOpportunityChip:customerStatusChip;
+ const chips='<div class="rangechips customerchips" aria-label="Filter Customer">'+['Semua','Aktif','Inactive','Punya Opportunity Aktif','Tanpa Opportunity Aktif'].map(value=>{
+ const rows=all.filter(p=>['Aktif','Inactive'].includes(value)?statusOfCustomer(p)===value:customerOpportunityMatches(p,value));
+ return '<button class="'+(selected===value?'active':'')+'" aria-pressed="'+(selected===value)+'" onclick="'+leadCall('setCustomerFilter',value)+'">'+E(value==='Aktif'?'Customer Aktif':value)+' <b>'+rows.length+'</b></button>';
+ }).join('')+'</div>';
+ const group=/<div class="rangechips customerchips"[^>]*>[\s\S]*?<\/div>/;
+ return group.test(html)?html.replace(group,chips):html.replace('<div class="scaletools">',chips+'<div class="scaletools">');
+};
 function openCustomerActiveOpportunities(id){const p=profile(id);if(!p||!mine(p))return;modal('Opportunity aktif · '+p.name,customerActiveOpportunities(id).map(o=>'<article class="record"><h3>'+E(o.name)+'</h3><p>'+E(o.product)+' · '+E(o.stage)+'</p>'+btn('Buka Opportunity',"document.querySelector('#modal').close();"+leadCall('go','Opportunity detail',o.id))+'</article>').join('')||empty('Tidak ada Opportunity aktif.'),()=>{});document.querySelector('#form > .actions > button.primary')?.remove();for(const button of document.querySelectorAll('#form button'))button.type='button';const close=document.querySelector('#form > .actions > button');if(close)close.textContent='Tutup';document.querySelector('#form').onsubmit=e=>e.preventDefault()}
 const flowPreviousCard=profileCard;
 profileCard=function(p){const html=flowPreviousCard(p),count=customerActiveOpportunities(p.id).length;return count?html.replace('</article>','<div class="actions">'+btn(count+' Opportunity Aktif',leadCall('openCustomerActiveOpportunities',p.id))+'</div></article>'):html};
@@ -20,4 +34,4 @@ const flowPreviousContent=renderContent;
 renderContent=function(){flowPreviousContent();if(view==='Opportunity detail'){const o=opp(focus);if(o&&mine(o))document.querySelector('#app')?.insertAdjacentHTML('beforeend',detailPanel('Asal Opportunity',opportunityOriginHtml(o)+detailFacts([['Asal',opportunityOrigin(o).label],['Sumber',o.acquisitionSource||db.leads.find(l=>l.id===(o.lead||o.sourceLead))?.source||'Belum dicatat'],['Referral / campaign',o.acquisitionReference||db.leads.find(l=>l.id===(o.lead||o.sourceLead))?.referral||'—']])))} };
 const flowPreviousReset=resetLists;
 resetLists=function(){customerOpportunityChip='Semua';return flowPreviousReset()};
-if(typeof workspaceLocationFields!=='undefined')workspaceLocationFields.push(['customerOpportunityChip',()=>customerOpportunityChip,v=>customerOpportunityChip=['Semua','Punya Opportunity Aktif','Tanpa Opportunity Aktif'].includes(v)?v:'Semua']);
+if(typeof workspaceLocationFields!=='undefined')workspaceLocationFields.push(['customerOpportunityChip',()=>customerOpportunityChip,v=>{customerOpportunityChip=['Semua','Punya Opportunity Aktif','Tanpa Opportunity Aktif'].includes(v)?v:'Semua';if(customerOpportunityChip!=='Semua')customerStatusChip='Semua'}]);
