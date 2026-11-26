@@ -25,7 +25,7 @@ function applyServer(result){
  authUser=result.user||authUser;BPD_USER=authUser;db=result.data;serverBase=clone(db);serverRevision=result.revision;
  BPD_MASTERS=db.config.masters;
  const process=stageDefs().filter(x=>x.type==='process'&&x.active!==false).map(x=>x.name);stages.splice(0,stages.length,...process);
- if(memberList.length)owners.splice(0,owners.length,...memberList.filter(m=>m.role==='AO'&&m.active!==false).map(m=>m.name));
+ if(memberList.length)owners.splice(0,owners.length,...assignableOwners());
  syncMessage='Tersinkron';render();
 }
 async function bootConnected(){const info=await api('branches');authUser=info.user;BPD_USER=authUser;if(info.selected){activeBranch=info.selected;await openConnectedWorkspace()}else await branchSelectionPage(info);}
@@ -41,7 +41,9 @@ async function openConnectedWorkspace(){
 }
 async function pollConnected(){
  if(!authUser||!activeBranch||choosingBranch||saving||journey||document.querySelector('#modal')?.open)return;
- try{let s=await api('state');if(s.revision!==serverRevision||!jsonSame(s.user,authUser)||!jsonSame(s.data.notifications,db.notifications)){memberList=(await api('members')).members;applyServer(s)}}catch(e){if(e.status!==401){syncMessage='Koneksi terputus';renderSyncStatus()}}
+ const branch=activeBranch,revision=serverRevision;
+ const canApply=()=>authUser&&activeBranch===branch&&!choosingBranch&&!saving&&!journey&&!document.querySelector('#modal')?.open&&serverRevision===revision;
+ try{let s=await api('state');if(!canApply())return;if(s.revision!==serverRevision||!jsonSame(s.user,authUser)||!jsonSame(s.data.notifications,db.notifications)){const members=(await api('members')).members;if(!canApply())return;memberList=members;applyServer(s)}}catch(e){if(e.status!==401){syncMessage='Koneksi terputus';renderSyncStatus()}}
 }
 const simulationRecordForLocal=record;
 record=function(action,object,detail=''){
@@ -277,7 +279,8 @@ renderContent=function(){
 };
 const protectedModal=modal;
 modal=function(title,html,handler){if(saving&&!journey)return toast('Tunggu perubahan selesai disimpan.');return protectedModal(title,html,handler)};
-ownerSelect=function(val){const allowed=supervisors()?owners:[actor()];return select('Penanggung jawab','owner',allowed,allowed.includes(val)?val:allowed[0])};
+function assignableOwners(branch=activeBranch){return memberList.filter(m=>m.role==='AO'&&m.active!==false&&(!branch||(m.branches||[branch]).includes(branch))).map(m=>m.name)}
+ownerSelect=function(val){const allowed=journey?owners:supervisors()?assignableOwners():[actor()];return select('Penanggung jawab','owner',allowed,allowed.includes(val)?val:allowed[0])};
 const saveMastersBeforeBusy=saveMasters;
 saveMasters=async function(config,scope='new'){if(saving)return toast('Tunggu penyimpanan selesai.');saving=true;syncMessage='Menyimpan…';renderSyncStatus();try{await saveMastersBeforeBusy(config,scope)}finally{saving=false;renderSyncStatus()}};
 const journeyBaseConnectedBefore=journeyBase;

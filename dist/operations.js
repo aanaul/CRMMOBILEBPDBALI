@@ -16,6 +16,7 @@ changeStage=function(id){
  const o=opp(id);if(!o||!mine(o))return toast('Opportunity tidak tersedia.');
  const defs=stageDefs().filter(s=>s.active||s.id===o.stageId||s.name===o.stage),current=defs.find(s=>s.id===o.stageId)||defs.find(s=>s.name===o.stage)||defs[0];
  modal('Ubah tahap Opportunity','<label>Tahap<select name="stageId" onchange="updateStageChangeFields()">'+defs.map(s=>'<option value="'+E(s.id)+'" '+(s===current?'selected':'')+'>'+E(s.name)+'</option>').join('')+'</select></label><div id="stageChangeFields">'+stageChangeFields(current)+'</div>',f=>{
+ const o=opp(id);if(!o||!mine(o))throw Error('Opportunity tidak tersedia. Muat ulang data.');
  const s=stageDefs().find(s=>s.id===f.stageId);if(!s||(!s.active&&s.id!==o.stageId&&s.name!==o.stage))throw Error('Pilih tahap aktif.');
  const negative=['lost','cancelled'].includes(s.type),reason=String(f.reason||'').trim();
  if(negative&&!stageReasonNames(s.type).includes(f.reasonCode))throw Error('Pilih kategori alasan yang sesuai.');
@@ -26,7 +27,7 @@ changeStage=function(id){
  if(o.outcome==='Aktif')o.lastProcessStage=o.stage;
  db.tasks.filter(t=>t.opp===id&&isOpen(t)).forEach(t=>{t.status='Dibatalkan';t.cancelReason='Opportunity '+s.name+': '+reason});if(moved||!o.closed)o.closed=now();
  }else delete o.closed;
- Object.assign(o,{stage:s.name,stageId:s.id,outcome:opportunityOutcome(s),reason,reasonCode:negative?f.reasonCode:'',reference:String(f.reference||'').trim(),slaDays:moved?Number(s.sla):(o.slaDays??Number(s.sla)),entered:moved?now():(o.entered||now())});
+ Object.assign(o,{stage:s.name,stageId:s.id,outcome:opportunityOutcome(s),probability:s.type==='won'?100:negative?0:o.probability,reason,reasonCode:negative?f.reasonCode:'',reference:String(f.reference||'').trim(),slaDays:moved?Number(s.sla):(o.slaDays??Number(s.sla)),entered:moved?now():(o.entered||now())});
  record('Ubah tahap Opportunity',id,old+' → '+s.name+(reason?' / '+reason:''));
  });
 };
