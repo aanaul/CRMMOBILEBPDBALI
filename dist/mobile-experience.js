@@ -13,7 +13,7 @@ function mxHomeMetrics(d,role){const s=d.summary;if(role==='Superadmin'){const a
  return [['Pipeline aktif',s.active,rdMoney(s.pipeline),'list','active'],['Task overdue',s.overdue,'Beban kerja tim','list','overdue'],['Customer',s.customers,'Dalam cakupan akses','list','customers'],['SLA Lead',s.leadSla,'Perlu perhatian tim','list','leadSla']];}
 function mobileRoleHome(){
  const role=authUser.role,allowed=mxAllowedMenu(role),primaryRoutes=mxPrimaryRoutes(role),primary=primaryRoutes.map(route=>allowed.find(m=>m[0]===route)).filter(Boolean),other=allowed.filter(m=>!primaryRoutes.includes(m[0])),entry=roleDashCache.get(rdKey()),d=entry?.data;
- const greeting='<section class="mx-home-heading"><div><p>'+E(role)+' · '+E(activeBranch.replace('BPD BALI ',''))+'</p><h1>Halo, '+E(authUser.name.split(' ')[0])+'</h1></div><button type="button" aria-label="Buka profil pengguna" onclick="go(\'Profil User\')">'+E(authUser.name.split(' ').slice(0,2).map(x=>x[0]).join(''))+'</button></section>';
+ const greeting='<section class="mx-home-heading"><div><p>'+E(role)+' · '+E(activeBranch.replace('BPD BALI ',''))+'</p><h1>Halo, '+E(authUser.name)+'</h1></div><button type="button" aria-label="Buka profil pengguna" onclick="go(\'Profil User\')">'+E(authUser.name.split(' ').slice(0,2).map(x=>x[0]).join(''))+'</button></section>';
  const attendance=typeof homeAttendanceHero==='function'?homeAttendanceHero():'';
  const stats=d?'<section class="mx-home-metrics" aria-label="Ringkasan sesuai role">'+mxHomeMetrics(d,role).map(([label,value,note,kind,arg])=>'<button type="button" onclick="'+mxCall(kind==='route'?'rdGo':'rdList',arg)+'"><span>'+E(label)+'</span><strong>'+E(value)+'</strong><small>'+E(note)+'</small></button>').join('')+'</section>':'<div class="mx-home-loading" role="status">'+E(entry?.error||'Memuat pekerjaan Anda…')+(entry?.error?'<button type="button" onclick="rdLoad(true)">Coba lagi</button>':'')+'</div>';
  const menus='<section class="mx-workspace"><div class="mx-section-heading"><h2>Menu kerja</h2><span>'+E(role)+'</span></div><div class="mx-menu-grid">'+primary.map(mxMenuButton).join('')+'</div><details class="mx-other-menu"><summary>Semua menu workspace</summary><div class="mx-menu-grid">'+other.map(mxMenuButton).join('')+'</div></details></section>';
@@ -21,6 +21,13 @@ function mobileRoleHome(){
  const monitor='<button type="button" class="mx-monitor-link" onclick="go(\'Monitoring\')"><span><strong>Monitoring lengkap</strong><small>Filter kantor/AO, pipeline dan target sesuai akses</small></span>'+mobileIcon('chart')+'</button>';
  return '<div class="mx-home">'+greeting+attendance+stats+menus+priorities+monitor+(d?'<p class="mx-update">Data dummy · '+E(fmt(d.at))+' WITA <button type="button" onclick="rdLoad(true)">Perbarui</button></p>':'')+'</div>';
 }
+function mxProfileScreen(){
+ const user=authUser;if(!user)return '';
+ const facts=[['Nama lengkap',user.name],['User ID',user.userId||user.id],['Role',user.role],['Kantor penempatan',user.homeBranch||activeBranch],['Kantor aktif',activeBranch],['Zona waktu','WITA · UTC+08']];
+ return '<div class="mx-profile"><section class="panel userprofilehero"><span class="profileinitials">'+E(user.name.split(' ').slice(0,2).map(x=>x[0]).join(''))+'</span><h1>'+E(user.name)+'</h1><p>'+E(user.role)+'</p></section><section class="panel"><h2>Informasi pengguna</h2>'+facts.map(([label,value])=>'<div class="profileinfo"><span>'+E(label)+'</span><strong>'+E(value||'Belum ditetapkan')+'</strong></div>').join('')+'</section><section class="panel profileactions"><button type="button" onclick="openBranchSelection()">Ganti Cabang</button><button type="button" onclick="changeOwnPassword()">Ubah password</button><button type="button" onclick="applicationInfo()">Informasi aplikasi</button><button type="button" class="mx-logout" onclick="logoutConnected()">Keluar</button></section></div>';
+}
+// Header avatar and Home avatar share the full user-profile route.
+openAccount=function(){if(!authUser)return;document.querySelector('#modal')?.close();go('Profil User');};
 function mxClearSearch(){const input=document.querySelector('#app .searchbox input');if(!input)return;input.value='';input.dispatchEvent(new Event('input',{bubbles:true}));queueMicrotask(()=>document.querySelector('#app .searchbox input')?.focus())}
 function mxCloseFilter(){const panel=document.querySelector('#app .compact-advanced');if(panel){panel.open=false;if(typeof compactFilterOpen!=='undefined')compactFilterOpen[compactListKey()]=false;panel.querySelector('summary')?.focus()}}
 function mxLabelChips(app){app.querySelectorAll('.rangechips,.tabs,.recordtabs,.c360-tabs').forEach(group=>{const active=group.querySelector('[aria-pressed="true"],.active,.primary');if(!active)return;const left=active.offsetLeft,right=left+active.offsetWidth;if(left<group.scrollLeft||right>group.scrollLeft+group.clientWidth)group.scrollLeft=Math.max(0,left-12);});}
@@ -36,7 +43,7 @@ const mxBoardPositions=new Map();
 let mxPreviousRoute='';
 function mxHomeContext(){if(view==='Home'&&mxPreviousRoute!=='Home'){if(typeof roleDashOffice!=='undefined')roleDashOffice='';if(typeof roleDashOwner!=='undefined')roleDashOwner='';if(typeof roleDashQueue!=='undefined')roleDashQueue='';}mxPreviousRoute=view;}
 const mxContentBefore=renderContent;
-renderContent=function(){mxHomeContext();const result=mxContentBefore.apply(this,arguments);mxDecorate();return result};
+renderContent=function(){mxHomeContext();const result=mxContentBefore.apply(this,arguments);if(view==='Profil User'&&authUser){const app=document.querySelector('#app');if(app)app.innerHTML=mxProfileScreen();}mxDecorate();return result};
 function mxViewport(){const viewport=window.visualViewport;if(!viewport)return;document.documentElement.style.setProperty('--mx-viewport-height',Math.round(viewport.height)+'px');document.documentElement.style.setProperty('--mx-viewport-top',Math.round(viewport.offsetTop)+'px');const modal=document.querySelector('#modal');document.body.classList.toggle('mx-keyboard-open',!!modal?.open&&window.innerHeight-viewport.height>140);}
 window.visualViewport?.addEventListener('resize',mxViewport);window.addEventListener('orientationchange',mxViewport);
 document.addEventListener('focusin',e=>{if(e.target.matches?.('input,textarea,select'))mxViewport()});document.addEventListener('close',mxViewport,true);

@@ -78,3 +78,5 @@ body[data-mode=mobile] main>header .accountbutton{width:44px;height:44px;min-hei
 body[data-mode=mobile] #nav.mobileBottomTabs button span{font-size:11px!important;line-height:1.15;white-space:normal;max-width:100%;min-height:25px;display:flex;align-items:center;justify-content:center;text-align:center}
 body[data-mode=mobile] #nav.mobileBottomTabs button{min-height:62px;gap:3px;padding:5px 2px}
 body[data-mode=mobile] #app .compact-scroll-actions button{min-height:44px;font-size:14px}
+
+.mx-home-heading>div{min-width:0;flex:1}.mx-home-heading h1{overflow-wrap:anywhere}.mx-home-heading>button{flex-shrink:0}.mx-profile{display:grid;gap:14px;min-width:0}.mx-profile h1{overflow-wrap:anywhere}.mx-profile .profileinfo{align-items:start;gap:14px}.mx-profile .profileinfo strong{overflow-wrap:anywhere}.mx-profile .profileactions .mx-logout{color:#a3322e}
