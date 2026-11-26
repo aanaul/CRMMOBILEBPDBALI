@@ -2,7 +2,7 @@
 let roleDashPeriod=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Makassar',year:'numeric',month:'2-digit'}).format(new Date()),roleDashOffice='',roleDashOwner='',roleDashQueue='',roleDashContext='';
 const roleDashCache=new Map();
 function rdCall(fn,...args){return E(fn+'('+args.map(x=>JSON.stringify(x)).join(',')+')')}
-function rdContext(){const key=(authUser?.id||'')+'|'+activeBranch;if(key!==roleDashContext){roleDashContext=key;roleDashOffice='';roleDashOwner='';roleDashQueue='';}return key}
+function rdContext(){const key=(authUser?.id||'')+'|'+(authUser?.role||'')+'|'+activeBranch;if(key!==roleDashContext){roleDashContext=key;roleDashOffice='';roleDashOwner='';roleDashQueue='';}return key}
 function rdKey(){return rdContext()+'|'+roleDashPeriod+'|'+roleDashOffice+'|'+roleDashOwner+'|'+serverRevision}
 function rdData(){return roleDashCache.get(rdKey())?.data}
 async function rdLoad(force=false){if(!authUser||!activeBranch||choosingBranch||journey)return;const key=rdKey(),old=roleDashCache.get(key);if(old&&!force)return;roleDashCache.set(key,{loading:true,data:old?.data});try{const data=await api('dashboard?period='+encodeURIComponent(roleDashPeriod)+'&office='+encodeURIComponent(roleDashOffice)+'&owner='+encodeURIComponent(roleDashOwner));roleDashCache.set(key,{data});}catch(e){roleDashCache.set(key,{error:e.message});}finally{if(roleDashCache.size>16)for(const k of [...roleDashCache.keys()].slice(0,-12))roleDashCache.delete(k);if(key===rdKey()&&['Monitoring','Home'].includes(view))renderContent();}}
