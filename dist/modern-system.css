@@ -182,3 +182,14 @@ body[data-mode=mobile] #form>.actions:last-child>button{min-height:46px;font-siz
 @media(max-width:600px){body[data-mode] #app :is(.recordhero,.c360-hero,.application-hero){padding:16px}body[data-mode] #app .modern-breadcrumb{font-size:12px}.modern-breadcrumb .modern-breadcrumb-context{display:none}body[data-mode] #app.compact-list .compact-toolbar{padding:10px}}
 @media(prefers-reduced-motion:reduce){body[data-mode] :is(button,a,input,select,textarea){transition:none;scroll-behavior:auto}}
 body[data-mode=mobile] #app :is(.recordtabs,.c360-tabs).ao-has-picker{display:none}
+
+/* Explicit sidebar foregrounds: legacy dark-navigation rules must not leak into light mode. */
+body[data-mode=cms]>aside .brand{color:#1b304e!important}
+body[data-mode=cms]>aside .brand small{color:#596e8b!important}
+body[data-mode=cms]>aside #nav button{color:#425b79!important;background:transparent!important;border-color:transparent!important;opacity:1!important}
+body[data-mode=cms]>aside #nav button .ui-icon{color:#526e92!important;opacity:1!important}
+body[data-mode=cms]>aside #nav button:hover{color:#0069bf!important;background:#f0f7ff!important}
+body[data-mode=cms]>aside #nav button:is(.active,[aria-current=page]){color:#0069bf!important;background:#e8f4ff!important;border-color:#d2e9fd!important;box-shadow:none!important}
+body[data-mode=cms]>aside #nav button:is(.active,[aria-current=page]) .ui-icon{color:#0875d1!important}
+body[data-mode=cms]>aside footer,body[data-mode=cms]>aside footer strong{color:#425b79!important}
+body[data-mode=cms]>aside #sidebarScrollHint{background:#f0f7ff!important;color:#425b79!important;border-color:#dfe7f2!important}
