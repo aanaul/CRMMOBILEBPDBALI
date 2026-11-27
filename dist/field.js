@@ -7,7 +7,7 @@ function fieldFresh(p){if(!p)return {label:'Belum ada lokasi',kind:'none'};let m
 async function loadField(force=false){
  if(!authUser||journey)return;if(fieldLoading&&!force)return;
  fieldLoading=true;let seq=++fieldSeq;
- try{let r=await api('field?day='+encodeURIComponent(fieldDay)+'&member='+encodeURIComponent(fieldMember||authUser.id));if(seq!==fieldSeq)return;fieldData=r;fieldMember=r.selected;fieldError='';if(!r.myOpen&&fieldWatch!==null){stopFieldWatch();fieldGPSMessage='Sesi kerja sudah berakhir; berbagi lokasi dihentikan.'}}
+ try{let r=await api('field?day='+encodeURIComponent(fieldDay)+(fieldMember?'&member='+encodeURIComponent(fieldMember):''));if(seq!==fieldSeq)return;fieldData=r;fieldMember=r.selected;fieldError='';if(!r.myOpen&&fieldWatch!==null){stopFieldWatch();fieldGPSMessage='Sesi kerja sudah berakhir; berbagi lokasi dihentikan.'}}
  catch(e){if(seq===fieldSeq)fieldError=e.message}finally{if(seq===fieldSeq){fieldLoading=false;if(['Absen','Lokasi Tim'].includes(view))renderContent()}}
 }
 function fieldSelectMember(id){stopJourneyReplay();fieldMember=id;fieldTimelineLimit=100;mapState.fitted=false;mapState.selectedPoint='';loadField(true)}
